@@ -1,12 +1,12 @@
-# CardRaabta – Payment Gateway for JazzCash — 1.1.3
+# CardRaabta – JazzCash Payment Gateway for WooCommerce — 1.2.0
 
-Accept debit and credit card payments directly through JazzCash in your WooCommerce store. Includes separate Sandbox and Live settings, 72-hour default expiry, signed payment callbacks, Checkout Blocks and HPOS support.
+Accept JazzCash Mobile Wallet and debit/credit card payments directly through JazzCash in your WooCommerce store. Includes separate Sandbox and Live settings, 72-hour default expiry, signed payment callbacks, Checkout Blocks and HPOS support.
 
-Developed by [Malik Arslan](https://malikarslan.com). Not an official or endorsed JazzCash plugin. Before upgrading the earlier 1.0.0–1.1.2 build, deactivate that plugin; the gateway ID and encrypted settings remain compatible. Do not run both builds together.
+Developed by [Malik Arslan](https://malikarslan.com). Not an official or endorsed JazzCash plugin. Before upgrading the earlier 1.0.0–1.1.3 build, deactivate that plugin; the gateway ID and encrypted settings remain compatible. Do not run both builds together.
 
 ## Download
 
-[Download the installable plugin ZIP](downloads/cardraabta-payment-gateway-for-jazzcash-1.1.3.zip?raw=true) · [Security review](docs/AUDIT.md) · [Merchant acceptance checklist](docs/RELEASE.md)
+[Download the installable plugin ZIP](downloads/cardraabta-jazzcash-payment-gateway-for-woocommerce-1.2.0.zip?raw=true) · [Security review](docs/AUDIT.md) · [Merchant acceptance checklist](docs/RELEASE.md)
 
 Use the installable ZIP for WordPress. GitHub’s source-code ZIP includes development files. Real JazzCash merchant acceptance remains required before live use.
 
@@ -26,13 +26,25 @@ Requirements: WordPress 6.5+, WooCommerce 8.3+, PHP 8.1+, OpenSSL, iconv, DOM/XM
 
 ## Included
 
-- Credit/debit card option on classic checkout and Checkout Blocks; card entry takes place on JazzCash.
+- Separate debit/credit card and Mobile Wallet options on classic checkout and Checkout Blocks; payment entry takes place on JazzCash.
 - Separate sandbox/live credentials and merchant-issued URLs; endpoints restricted to the matching JazzCash domain.
 - Password-style, blank-on-render credential controls. Blank retains an existing value; `__CLEAR__` removes it. Values stored in settings are AES-256-GCM encrypted using WordPress salts.
 - HMAC-SHA256 request/response checking, constant-time signature comparison, unique transaction references and exact decimal-to-paisa conversion.
 - Return URL and SOAP IPN validate a persisted attempt before updating its order. Return responses require matching merchant, amount, currency, type and creation timestamp. The documented SOAP input has no amount/currency; its signature, password and transaction timestamp bind it to the saved original request, whose amount must still match the order.
 - Duplicate callback protection, database serialization of updates, and paid/refunded/cancelled order protection. Paid orders cannot be downgraded by later error notifications.
-- WooCommerce order CRUD for HPOS. Minimal logs under WooCommerce → Status → Logs → `cardraabta-payment-gateway-for-jazzcash`.
+- WooCommerce order CRUD for HPOS. Minimal logs under WooCommerce → Status → Logs → `cardraabta-jazzcash-payment-gateway-for-woocommerce`.
+
+## JazzCash Mobile Wallet
+
+After JazzCash enables MWALLET on your merchant profile, open WooCommerce → Settings → Payments → **JazzCash Mobile Wallet**, enable it and save. Configure shared credentials, mode, expiry and wallet URLs under **JazzCash Credit / Debit Card** settings. Classic checkout and Checkout Blocks then show **JazzCash Credit / Debit Card** and **JazzCash Mobile Wallet** as distinct payment choices. Each can be enabled independently. Wallet is off by default when upgrading.
+
+Both methods share the existing encrypted credentials, mode, expiry and safe logs. Wallet enable/title/description are stored separately, so WooCommerce settings toggles and REST updates cannot overwrite card controls. Enter the provider-issued sandbox/live **wallet payment URL** if it differs from your card URL. A blank wallet URL uses the existing mode URL; confirm that endpoint supports the wallet profile. Wallet requests follow the documented hosted Mobile Account profile: version 1.1, MWALLET, TBANK and RETL. Cards keep their existing version 2.0 MPAY profile.
+
+The payer is redirected to JazzCash to enter wallet details and approve payment on their phone. The plugin does not collect or store wallet numbers, CNIC digits or MPINs. Merchant payment-password visibility in the hosted form remains as documented below; the Integrity Salt stays server-side.
+
+A persisted attempt is bound to its original card/wallet instrument as well as merchant, amount, timestamp and mode. Changing an instrument after an attempt is created requires manual reconciliation; the plugin will not generate another charge attempt. Authenticated callbacks remain accepted for existing attempts even if that checkout method is later disabled.
+
+Before Live use, test a real wallet success, rejection, abandonment, replay, delayed success and provider-sent SOAP notification with your approved merchant profile. The documented SOAP adapter still requires merchant provisioning and acknowledgement acceptance.
 
 ## Payment and stock behavior
 
@@ -46,7 +58,7 @@ Reloading an unexpired payment attempt reuses its reference. After its expiry, t
 
 ## Credential security and hosted redirect
 
-JazzCash’s documented card redirect form contains `pp_Password`. It is sent in a hidden HTML field and **can be viewed by the customer in the browser source**. A hidden field is not secret storage. The Integrity Salt never leaves the server. Use JazzCash payment credentials only, and confirm this page-redirection profile is approved for your merchant. This plugin does not claim the password is server-only. Server-only credential transmission would require a different JazzCash-approved session/API integration.
+JazzCash’s documented card and wallet redirect forms contain `pp_Password`. It is sent in a hidden HTML field and **can be viewed by the customer in the browser source**. A hidden field is not secret storage. The Integrity Salt never leaves the server. Use JazzCash payment credentials only, and confirm this page-redirection profile is approved for your merchant. This plugin does not claim the password is server-only. Server-only credential transmission would require a different JazzCash-approved session/API integration.
 
 Do not enable request-body capture in hosting/APM/security tools on these routes: JazzCash responses can include payment/customer fields. This plugin never logs full payloads, passwords, salts, hashes, card details, customer contact details or callback URLs. Encrypting settings protects database copies; it does not protect against a compromised WordPress server. Keep salts backed up; changing them makes saved encrypted credentials unreadable until re-entered.
 
@@ -73,11 +85,11 @@ Local verification includes standalone protocol/security tests, a disposable run
 
 The supplied WSDL defines the merchant service contract; it must be registered with JazzCash. The public documentation does not establish the provisioning and response-hash byte conventions of every merchant profile. If your onboarding sample differs, obtain that sample and adapt the SOAP adapter before enabling IPN in production. Unsigned notifications are rejected, even if your profile makes hashing optional.
 
-This version does not implement automatic refunds, recurring payments, saved cards, wallet/OTC payments or automatic status inquiry. Reconcile unresolved orders and issue refunds in the JazzCash portal. Deactivation retains settings. Plugin deletion removes settings and credentials for the current site while retaining order accounting records. On multisite, remove saved credentials on every site before network deletion. Remove wp-config.php constants separately.
+This version does not implement automatic refunds, recurring payments, saved cards, OTC voucher payments or automatic status inquiry. Reconcile unresolved orders and issue refunds in the JazzCash portal. Deactivation retains settings. Plugin deletion removes settings and credentials for the current site while retaining order accounting records. On multisite, remove saved credentials on every site before network deletion. Remove wp-config.php constants separately.
 
 ## Developer checks
 
-The GitHub/source package includes `tests/`, `tools/`, CI and audit documentation. The installable plugin ZIP excludes development files. Run `php tests/run.php` from the source checkout. The CLI test uses fake credentials and makes no charges. Build the installable ZIP with `python3 tools/build.py`.
+The GitHub/source package includes `tests/`, `tools/`, CI and audit documentation. The installable plugin ZIP excludes development files. Run `php tests/run.php` from the source checkout. The CLI tests use fake credentials and make no charges. Wallet regressions: `php tests/wallet.php`; Blocks registration: `node tests/blocks.js`. Build the installable ZIP with `python3 tools/build.py`.
 
 Reference documentation consulted 13 October 2026:
 

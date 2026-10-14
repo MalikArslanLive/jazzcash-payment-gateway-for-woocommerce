@@ -1,0 +1,72 @@
+<?php
+/** Wallet security regression tests, synthetic credentials and orders only. */
+require __DIR__ . '/run.php';
+$wallet_start = $passed;
+$g->settings['mode'] = 'sandbox';
+$wallet_gateway = new AGJC_Wallet_Gateway();
+check($wallet_gateway->id === 'jccg_wallet' && $g->id === 'jccg', 'wallet and card have distinct checkout IDs');
+check($wallet_gateway->enabled === 'no', 'wallet is opt-in on existing stores');
+check($wallet_gateway->get_option_key() !== $g->get_option_key(), 'wallet enable/title settings cannot overwrite card configuration');
+$test_options['woocommerce_jccg_settings']=$g->settings;
+$read_secret=new ReflectionMethod(AGJC_Gateway::class,'secret');$read_secret->setAccessible(true);
+check($read_secret->invoke($wallet_gateway,'sandbox','salt')==='test-integrity-salt','wallet uses the existing encrypted merchant configuration');
+$wallet_gateway->settings = $g->settings;
+function wallet_order() {
+    global $ref;
+    $o = reset_order();
+    $o->payment_method = 'jccg_wallet';
+    $o->meta['_jccg_attempts'][$ref]['instrument'] = 'wallet';
+    return $o;
+}
+function wallet_signed(array $changes = array()) {
+    return signed(array_merge(array('pp_TxnType'=>'MWALLET'), $changes));
+}
+$o=wallet_order();
+$g->handle_notification(wallet_signed());
+check($o->complete_count===1 && $o->status==='processing', 'shared callback completes verified wallet order');
+$g->handle_notification(wallet_signed());
+check($o->complete_count===1, 'wallet success replay fulfils once');
+$g->handle_notification(wallet_signed(array('pp_ResponseCode'=>'199')));
+check($o->status==='processing', 'wallet failure cannot downgrade paid order');
+$o=wallet_order();
+$bad=wallet_signed();$bad['pp_Amount']='1';
+rejects(fn()=>$g->handle_notification($bad), 'wallet amount tampering fails HMAC');
+rejects(fn()=>$g->handle_notification(wallet_signed(array('pp_Amount'=>'1'))), 'signed wallet wrong amount rejected');
+rejects(fn()=>$g->handle_notification(wallet_signed(array('pp_TxnCurrency'=>'USD'))), 'signed wallet wrong currency rejected');
+rejects(fn()=>$g->handle_notification(wallet_signed(array('pp_MerchantID'=>'OTHER'))), 'signed wallet wrong merchant rejected');
+rejects(fn()=>$g->handle_notification(wallet_signed(array('pp_TxnDateTime'=>'20261013120001'))), 'signed wallet wrong timestamp rejected');
+rejects(fn()=>$g->handle_notification(wallet_signed(array('pp_TxnType'=>'MPAY'))), 'card response cannot pay wallet order');
+rejects(fn()=>$g->handle_notification(wallet_signed(array('pp_TxnType'=>'MIGS'))), 'legacy card response cannot pay wallet order');
+check($o->complete_count===0, 'wallet attack probes do not fulfil');
+$o=reset_order();
+rejects(fn()=>$g->handle_notification(wallet_signed()), 'wallet response cannot pay a legacy card order');
+$o=wallet_order();unset($o->meta['_jccg_attempts'][$ref]['instrument']);
+rejects(fn()=>$g->handle_notification(wallet_signed()), 'legacy card attempt cannot be relabeled as wallet');
+$o=wallet_order();$o->payment_method='jccg';
+rejects(fn()=>$g->handle_notification(wallet_signed()), 'edited payment method requires reconciliation');
+$o=wallet_order();$o->total='999.00';
+rejects(fn()=>$g->handle_notification(wallet_signed()), 'edited wallet order total rejected');
+$o=wallet_order();$o->status='cancelled';
+$g->handle_notification(wallet_signed());$g->handle_notification(wallet_signed());
+check($o->status==='cancelled' && $o->complete_count===0 && count($o->notes)===1, 'late wallet success on cancelled order held for review once');
+$o=wallet_order();$o->status='refunded';$o->paid=true;
+$g->handle_notification(wallet_signed());
+check($o->status==='refunded' && $o->complete_count===0, 'wallet cannot resurrect refunded order');
+$o=wallet_order();$g->handle_notification(wallet_signed(array('pp_ResponseCode'=>'124')));
+check($o->status==='on-hold' && $o->complete_count===0, 'wallet non-success needs reconciliation');
+$g->handle_notification(wallet_signed());
+check($o->complete_count===1, 'later wallet verified success completes held order');
+$o=wallet_order();
+$soap=wallet_signed(array('pp_Password'=>'test-password'));
+unset($soap['pp_Amount'],$soap['pp_TxnCurrency'],$soap['pp_MerchantID']);
+$soap['pp_SecureHash']=AGJC_Protocol::hash($soap,'test-integrity-salt');
+$g->handle_notification($soap,true);
+check($o->complete_count===1, 'wallet SOAP binds stored request amount and instrument');
+$o=wallet_order();$soap['pp_TxnType']='MPAY';$soap['pp_SecureHash']=AGJC_Protocol::hash($soap,'test-integrity-salt');
+rejects(fn()=>$g->handle_notification($soap,true),'card SOAP cannot pay wallet order');
+$soap['pp_TxnType']='MWALLET';$soap['pp_Password']='wrong';$soap['pp_SecureHash']=AGJC_Protocol::hash($soap,'test-integrity-salt');
+rejects(fn()=>$g->handle_notification($soap,true),'wallet SOAP wrong password rejected');
+$g->settings['mode']='live';$o=wallet_order();
+$g->handle_notification(wallet_signed());
+check($o->complete_count===1,'late wallet response uses credentials from saved original mode');
+echo 'Wallet checks: '.($passed-$wallet_start)." passed.\n";

@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: CardRaabta – Payment Gateway for JazzCash
- * Description: Accept debit and credit card payments through JazzCash in WooCommerce, with Sandbox/Live modes, signed callbacks and configurable expiry.
- * Version: 1.1.3
+ * Plugin Name: CardRaabta – JazzCash Payment Gateway for WooCommerce
+ * Description: Accept JazzCash wallet and debit/credit card payments in WooCommerce, with Sandbox/Live modes, signed callbacks and configurable expiry.
+ * Version: 1.2.0
  * Requires at least: 6.5
  * Requires PHP: 8.1
  * WC requires at least: 8.3
@@ -12,14 +12,14 @@
  * Author URI: https://malikarslan.com
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: cardraabta-payment-gateway-for-jazzcash
+ * Text Domain: cardraabta-jazzcash-payment-gateway-for-woocommerce
  */
 defined( 'ABSPATH' ) || exit;
 register_activation_hook(
 	__FILE__,
 	static function () {
-		if ( is_plugin_active( 'jazzcash-card-gateway/jazzcash-card-gateway.php' ) || is_plugin_active( 'arslan-card-gateway-jazzcash/arslan-card-gateway-jazzcash.php' ) || is_plugin_active( 'payment-gateway-for-jazzcash/payment-gateway-for-jazzcash.php' ) ) {
-			wp_die( esc_html__( 'Deactivate the previous JazzCash Card Gateway plugin before activating this release. Settings and order records are retained.', 'cardraabta-payment-gateway-for-jazzcash' ) );
+		if ( is_plugin_active( 'jazzcash-card-gateway/jazzcash-card-gateway.php' ) || is_plugin_active( 'arslan-card-gateway-jazzcash/arslan-card-gateway-jazzcash.php' ) || is_plugin_active( 'payment-gateway-for-jazzcash/payment-gateway-for-jazzcash.php' ) || is_plugin_active( 'cardraabta-payment-gateway-for-jazzcash/cardraabta-payment-gateway-for-jazzcash.php' ) ) {
+			wp_die( esc_html__( 'Deactivate the previous JazzCash Card Gateway plugin before activating this release. Settings and order records are retained.', 'cardraabta-jazzcash-payment-gateway-for-woocommerce' ) );
 		}
 	}
 );
@@ -28,7 +28,7 @@ if ( defined( 'AGJC_FILE' ) ) {
 	return;
 }
 define( 'AGJC_FILE', __FILE__ );
-define( 'AGJC_VERSION', '1.1.3' );
+define( 'AGJC_VERSION', '1.2.0' );
 add_action(
 	'template_redirect',
 	static function () {
@@ -44,8 +44,8 @@ add_action(
 	static function () {
 		if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
 			wp_add_privacy_policy_content(
-				'CardRaabta – Payment Gateway for JazzCash',
-				'<p>' . esc_html__( 'When you choose JazzCash, the order reference, amount, currency, payment timestamps and return address are sent to JazzCash to process your payment. Card information is entered on JazzCash. Payment references and status are retained with your order. This plugin does not add analytics or advertising trackers. Contact the store regarding order retention and privacy requests.', 'cardraabta-payment-gateway-for-jazzcash' ) . '</p>'
+				'CardRaabta – JazzCash Payment Gateway for WooCommerce',
+				'<p>' . esc_html__( 'When you choose JazzCash, the order reference, amount, currency, payment timestamps and return address are sent to JazzCash to process your payment. Card and wallet information is entered on JazzCash; wallet payment approval takes place on your phone. Payment references and status are retained with your order. This plugin does not add analytics or advertising trackers. Contact the store regarding order retention and privacy requests.', 'cardraabta-jazzcash-payment-gateway-for-woocommerce' ) . '</p>'
 			);
 		}
 	}
@@ -70,6 +70,7 @@ add_action(
 			'woocommerce_payment_gateways',
 			static function ( $gateways ) {
 				$gateways[] = 'AGJC_Gateway';
+				$gateways[] = 'AGJC_Wallet_Gateway';
 				return $gateways;
 			}
 		);
@@ -97,6 +98,7 @@ add_action(
 				'woocommerce_blocks_payment_method_type_registration',
 				static function ( $registry ) {
 					$registry->register( new AGJC_Blocks() );
+					$registry->register( new AGJC_Blocks( 'jccg_wallet' ) );
 				}
 			);
 		}
@@ -105,7 +107,7 @@ add_action(
 add_filter(
 	'plugin_action_links_' . plugin_basename( __FILE__ ),
 	static function ( $links ) {
-		array_unshift( $links, '<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=checkout&section=jccg' ) ) . '">' . esc_html__('Settings', 'cardraabta-payment-gateway-for-jazzcash') . '</a>' );
+		array_unshift( $links, '<a href="' . esc_url( admin_url( 'admin.php?page=wc-settings&tab=checkout&section=jccg' ) ) . '">' . esc_html__('Settings', 'cardraabta-jazzcash-payment-gateway-for-woocommerce') . '</a>' );
 		return $links;
 	}
 );

@@ -20,14 +20,16 @@ foreach(['sandbox','live'] as $agjc_mode) {
  $agjc_settings[$agjc_mode.'_url']='https://'.($agjc_mode==='live'?'payments':'sandbox').'.jazzcash.com.pk/CustomerPortal/transactionmanagement/merchantform/';
 }
 update_option('woocommerce_jccg_settings',$agjc_settings,false);
+update_option('woocommerce_jccg_wallet_settings',['enabled'=>'yes','title'=>'JazzCash Mobile Wallet','description'=>'Pay from your JazzCash wallet.'],false);
 foreach(['no','yes'] as $agjc_hpos) {
  $agjc_sync=wc_get_container()->get(\Automattic\WooCommerce\Internal\DataStores\Orders\DataSynchronizer::class);
  while($agjc_batch=$agjc_sync->get_next_batch_to_process(100)) {$agjc_sync->process_batch($agjc_batch);}
  update_option('woocommerce_custom_orders_table_enabled',$agjc_hpos);
  foreach(['sandbox','live'] as $agjc_mode) {
   $agjc_settings['mode']=$agjc_mode;update_option('woocommerce_jccg_settings',$agjc_settings,false);
-  $agjc_gateway=new AGJC_Gateway();
-  agjc_assert($agjc_gateway->is_available(),"$agjc_mode gateway available (HPOS $agjc_hpos)");
+  foreach(['card','wallet'] as $agjc_instrument) {
+  $agjc_gateway=$agjc_instrument==='wallet'?new AGJC_Wallet_Gateway():new AGJC_Gateway();
+  agjc_assert($agjc_gateway->is_available(),"$agjc_mode $agjc_instrument gateway available (HPOS $agjc_hpos)");
   $agjc_product=new WC_Product_Simple();$agjc_product->set_name('Disposable QA product');$agjc_product->set_regular_price('100.25');$agjc_product->set_manage_stock(true);$agjc_product->set_stock_quantity(10);$agjc_product->save();
   $agjc_order=wc_create_order();$agjc_order->set_payment_method($agjc_gateway);$agjc_order->set_currency('PKR');$agjc_order->add_product($agjc_product,1);$agjc_order->calculate_totals();$agjc_order->save();
   agjc_assert(str_contains($agjc_order->get_data_store()->get_current_class_name(), $agjc_hpos==='yes' ? 'OrdersTableDataStore' : 'WC_Order_Data_Store_CPT'), 'expected authoritative order data store active');
@@ -38,8 +40,14 @@ foreach(['no','yes'] as $agjc_hpos) {
   $agjc_doc=new DOMDocument();@$agjc_doc->loadHTML($agjc_html);$agjc_fields=[];
   foreach($agjc_doc->getElementsByTagName('input') as $agjc_input) {$agjc_fields[$agjc_input->getAttribute('name')]=$agjc_input->getAttribute('value');}
   agjc_assert(isset($agjc_fields['pp_SecureHash']) && AGJC_Protocol::verify($agjc_fields,'QA-INTEGRITY-SALT'),'real receipt emits verifiable request');
-  agjc_assert($agjc_fields['pp_Amount']==='10025' && $agjc_fields['pp_TxnType']==='MPAY','real receipt uses paisa and card type');
+  agjc_assert($agjc_fields['pp_Amount']==='10025' && $agjc_fields['pp_TxnType']===($agjc_instrument==='wallet'?'MWALLET':'MPAY'),'real receipt uses paisa and saved instrument');
   agjc_assert(!str_contains($agjc_html,'QA-INTEGRITY-SALT'),'integrity salt absent from receipt');
+  if($agjc_instrument==='wallet'){
+   agjc_assert($agjc_fields['pp_Version']==='1.1' && $agjc_fields['pp_BankID']==='TBANK' && $agjc_fields['pp_ProductID']==='RETL','wallet receipt matches official hosted profile');
+   agjc_assert(!isset($agjc_fields['pp_IsRegisteredCustomer']) && !isset($agjc_fields['pp_MobileNumber']) && !isset($agjc_fields['pp_CNIC']) && !isset($agjc_fields['pp_MPIN']),'wallet credentials and identity are collected only by JazzCash');
+   $agjc_pending=wc_get_order($agjc_id);
+   agjc_assert($agjc_pending->get_meta('_jccg_attempts')[$agjc_fields['pp_TxnRefNo']]['instrument']==='wallet','wallet instrument is saved before redirect');
+  }
   $agjc_start=DateTimeImmutable::createFromFormat('YmdHis',$agjc_fields['pp_TxnDateTime'],new DateTimeZone('Asia/Karachi'));
   $agjc_end=DateTimeImmutable::createFromFormat('YmdHis',$agjc_fields['pp_TxnExpiryDateTime'],new DateTimeZone('Asia/Karachi'));
   agjc_assert($agjc_end->getTimestamp()-$agjc_start->getTimestamp()===259200,'receipt expiry is 72 hours');
@@ -56,6 +64,7 @@ foreach(['no','yes'] as $agjc_hpos) {
   $agjc_response['pp_ResponseCode']='199';$agjc_response['pp_SecureHash']=AGJC_Protocol::hash($agjc_response,'QA-INTEGRITY-SALT');$agjc_gateway->handle_notification($agjc_response);
   agjc_assert(wc_get_order($agjc_id)->is_paid(),'failure cannot downgrade real paid order');
   $_GET['key']='bad';ob_start();$agjc_gateway->receipt($agjc_id);$agjc_denied=ob_get_clean();agjc_assert(!str_contains($agjc_denied,'pp_Password'),'invalid order key exposes no payment form');
+  }
  }
 }
 $agjc_gateway=new AGJC_Gateway();ob_start();$agjc_gateway->admin_options();$agjc_admin=ob_get_clean();
@@ -115,4 +124,35 @@ $agjc_customer=wp_create_user('qa-security-customer-'.wp_generate_password(8,fal
 wp_set_current_user($agjc_customer);agjc_assert($agjc_guard->process_admin_options()===false,'ordinary customer cannot change payment settings');
 ob_start();$agjc_guard->admin_options();$agjc_customer_admin=ob_get_clean();agjc_assert($agjc_customer_admin==='','ordinary customer cannot render gateway administration');
 wp_set_current_user(1);
+$agjc_both=$agjc_settings;$agjc_both['enabled']='no';update_option('woocommerce_jccg_settings',$agjc_both,false);
+$agjc_wallet_only=new AGJC_Wallet_Gateway();$agjc_card_off=new AGJC_Gateway();
+agjc_assert($agjc_wallet_only->is_available() && !$agjc_card_off->is_available(),'wallet can be enabled independently of cards');
+$agjc_both['live_wallet_url']='https://attacker.example/path';update_option('woocommerce_jccg_settings',$agjc_both,false);agjc_assert(!$agjc_wallet_only->ready(),'wallet rejects off-domain endpoint');
+$agjc_both['live_wallet_url']='http://payments.jazzcash.com.pk/path';update_option('woocommerce_jccg_settings',$agjc_both,false);agjc_assert(!$agjc_wallet_only->ready(),'wallet rejects HTTP endpoint');
+$agjc_both['live_wallet_url']='https://user:pass@payments.jazzcash.com.pk/path';update_option('woocommerce_jccg_settings',$agjc_both,false);agjc_assert(!$agjc_wallet_only->ready(),'wallet rejects URL credentials');
+$agjc_both['live_wallet_url']='https://payments.jazzcash.com.pk:8443/path';update_option('woocommerce_jccg_settings',$agjc_both,false);agjc_assert(!$agjc_wallet_only->ready(),'wallet rejects alternate endpoint port');
+$agjc_both['live_wallet_url']='https://payments.jazzcash.com.pk/merchant-wallet';update_option('woocommerce_jccg_settings',$agjc_both,false);agjc_assert($agjc_wallet_only->ready(),'wallet accepts approved HTTPS origin');
+$agjc_wallet_only->update_option('enabled','no');
+agjc_assert(get_option('woocommerce_jccg_settings')['enabled']==='no' && get_option('woocommerce_jccg_wallet_settings')['enabled']==='no','wallet settings toggle changes only its own option');
+$agjc_wallet_only->update_option('enabled','yes');
+agjc_assert(get_option('woocommerce_jccg_settings')['enabled']==='no' && get_option('woocommerce_jccg_wallet_settings')['enabled']==='yes','wallet can re-enable without enabling cards');
+$agjc_api=new WP_REST_Request('PUT','/wc/v3/payment_gateways/jccg_wallet');$agjc_api->set_param('enabled',true);$agjc_api->set_param('title','Wallet API title');$agjc_api_result=rest_do_request($agjc_api);
+agjc_assert($agjc_api_result->get_status()===200 && get_option('woocommerce_jccg_settings')['enabled']==='no' && get_option('woocommerce_jccg_wallet_settings')['enabled']==='yes','WooCommerce REST wallet update cannot enable the card gateway');
+$agjc_api_data=$agjc_api_result->get_data();agjc_assert(!isset($agjc_api_data['settings']['live_salt']) && !isset($agjc_api_data['settings']['live_password']),'wallet REST settings contain no shared credential fields');
+wp_set_current_user(0);$agjc_api_denied=rest_do_request($agjc_api);agjc_assert(in_array($agjc_api_denied->get_status(),[401,403],true),'anonymous wallet REST settings update rejected');wp_set_current_user(1);
+update_option('woocommerce_jccg_wallet_settings',['enabled'=>'no'],false);agjc_assert(!(new AGJC_Wallet_Gateway())->is_available(),'wallet opt-out removes availability');
+update_option('woocommerce_jccg_settings',$agjc_settings,false);
+update_option('woocommerce_jccg_wallet_settings',['enabled'=>'yes'],false);
+$agjc_switch_card=new AGJC_Gateway();$agjc_switch_wallet=new AGJC_Wallet_Gateway();
+$agjc_switch_order=wc_create_order();$agjc_switch_order->set_payment_method('jccg');$agjc_switch_order->set_currency('PKR');$agjc_switch_order->set_total('100.25');$agjc_switch_order->save();
+$_GET['key']=$agjc_switch_order->get_order_key();ob_start();$agjc_switch_card->receipt($agjc_switch_order->get_id());ob_end_clean();
+$agjc_switch_order=wc_get_order($agjc_switch_order->get_id());$agjc_ref_before=$agjc_switch_order->get_meta('_jccg_active');$agjc_switch_order->set_payment_method('jccg_wallet');$agjc_switch_order->save();
+ob_start();$agjc_switch_wallet->receipt($agjc_switch_order->get_id());$agjc_switch_html=ob_get_clean();
+agjc_assert(!str_contains($agjc_switch_html,'<form') && wc_get_order($agjc_switch_order->get_id())->get_meta('_jccg_active')===$agjc_ref_before,'switching instrument after an attempt cannot create another charge');
+if(class_exists('AGJC_Blocks')){
+ WC()->payment_gateways()->init();
+ $agjc_wallet_block=new AGJC_Blocks('jccg_wallet');$agjc_wallet_block->initialize();$agjc_wallet_data=$agjc_wallet_block->get_payment_method_data();
+ agjc_assert($agjc_wallet_block->get_name()==='jccg_wallet' && $agjc_wallet_data['enabled'],'wallet Blocks method uses separate active ID');
+ agjc_assert(!str_contains(wp_json_encode($agjc_wallet_data),'QA-PAYMENT-PASSWORD') && !str_contains(wp_json_encode($agjc_wallet_data),'QA-INTEGRITY-SALT'),'wallet Blocks data exposes no merchant secrets');
+}
 WP_CLI::success($agjc_passed.' WordPress/WooCommerce integration checks passed. Provider responses were locally signed fixtures, not real JazzCash transactions.');

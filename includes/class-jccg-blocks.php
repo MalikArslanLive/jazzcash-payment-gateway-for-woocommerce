@@ -2,10 +2,13 @@
 defined( 'ABSPATH' ) || exit;
 final class AGJC_Blocks extends \Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType {
 	protected $name = 'jccg';
+	public function __construct( string $gateway_id = 'jccg' ) {
+		$this->name = $gateway_id === 'jccg_wallet' ? 'jccg_wallet' : 'jccg';
+	}
 	public function initialize() {
 		$this->settings = get_option( 'woocommerce_jccg_settings', array() ); }
 	public function is_active() {
-		$gateway = WC()->payment_gateways()->payment_gateways()['jccg'] ?? null;
+		$gateway = WC()->payment_gateways()->payment_gateways()[ $this->name ] ?? null;
 		return $gateway && $gateway->is_available();
 	}
 	public function get_payment_method_script_handles() {
@@ -13,10 +16,11 @@ final class AGJC_Blocks extends \Automattic\WooCommerce\Blocks\Payments\Integrat
 		return array( 'jccg-blocks' );
 	}
 	public function get_payment_method_data() {
-		$gateway = WC()->payment_gateways()->payment_gateways()['jccg'] ?? null;
+		$gateway = WC()->payment_gateways()->payment_gateways()[ $this->name ] ?? null;
 		return array(
-			'title'       => $gateway ? $gateway->get_title() : __('JazzCash Credit / Debit Card', 'cardraabta-payment-gateway-for-jazzcash'),
-			'description' => $this->get_setting( 'description', __('Pay securely by card on JazzCash.', 'cardraabta-payment-gateway-for-jazzcash') ),
+			'title'       => $gateway ? $gateway->get_title() : __('JazzCash Credit / Debit Card', 'cardraabta-jazzcash-payment-gateway-for-woocommerce'),
+			'description' => $gateway ? $gateway->get_description() : '',
+			'enabled' => (bool) $this->is_active(),
 			'supports'    => array( 'products' ),
 		);
 	}

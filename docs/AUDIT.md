@@ -1,4 +1,34 @@
-# Release and security review — 1.1.1
+# Release and security review — 1.2.0
+
+Reviewed 14 October 2026. This release adds a separate, disabled-by-default JazzCash Mobile Wallet gateway to the existing card gateway. Both instruments use hosted checkout and the same encrypted merchant configuration, with separate enable/title/description settings. Sandbox and live configuration paths are supported; actual merchant acceptance testing remains pending.
+
+## Current release evidence
+
+| Check | Result |
+| --- | --- |
+| Baseline protocol/regression | 48 passed |
+| Additional adversarial checks | 20 passed |
+| Additional wallet checks | 27 passed |
+| Blocks registration/text/availability | 10 assertions passed |
+| Bootstrap/migration protection | 2 passed |
+| Real WordPress/WooCommerce integration | 160 passed, card/wallet, sandbox/live, legacy orders/HPOS |
+| Local HTTP return/SOAP callbacks | 50 passed with synthetic signed provider messages |
+| Official Plugin Check 2.1.0 | Extracted release: checks complete, no errors found |
+| Source/syntax | Six runtime PHP/JS files passed narrow dangerous-sink scan; PHP lint and JavaScript syntax passed |
+
+Environment: PHP 8.3.6, WordPress 7.1.3, WooCommerce 11.2.1, MariaDB 10.11.14. Evidence files prefixed `wallet-` are in `docs/evidence/`. Source tests and CI retain the baseline tests and add wallet regression coverage. No real payment, provider-originated IPN, settlement, wallet approval or live merchant credential test was performed. Local HTTP uses a trusted test router indicating HTTPS, not public TLS.
+
+### Wallet trust boundaries
+
+Each attempt persists its instrument; legacy attempts without an instrument remain card-only. Return/IPN must match the saved instrument and current order payment method. Signed cross-instrument callbacks, modified amounts, forged signatures, invalid merchant/currency/date, expired attempt reuse and paid-order downgrades are rejected. Both methods remain available independently. Wallet settings have a distinct option key so WooCommerce REST/AJAX toggles cannot enable the card method. Credential fields stay in the shared encrypted settings. Anonymous REST settings access remains denied.
+
+Wallet checkout sends `pp_Version=1.1`, `pp_TxnType=MWALLET`, `pp_BankID=TBANK`, `pp_ProductID=RETL`, based on the official JazzCash hosted Mobile Account sample. The plugin collects no wallet number, CNIC, OTP or MPIN. The dedicated merchant `pp_Password` is browser-visible under the hosted protocol; the Integrity Salt remains server-only. No new arbitrary fetch, executable download, file upload or user-management facility was introduced.
+
+The existing controls documented below are retained. This is a bounded source review and synthetic test result, not proof that compromise is impossible, an antivirus certification, WordPress.org approval or JazzCash approval. Merchant account activation for MWALLET and provider-approved URLs are required before use. Follow `docs/RELEASE.md` for merchant acceptance testing. WordPress.org submission remains pending.
+
+---
+
+# Historical review — 1.1.1
 
 Security review performed 13 October 2026 on 1.1.0. Branding and author-metadata revision prepared 14 October 2026 as 1.1.1. Scope: the supplied plugin source and generated runtime ZIP. Result: no exploitable injection, arbitrary execution, file-upload or unauthorized account-access path was identified in this review. This is a bounded code review and local test result, **not** a guarantee against compromise, an independent penetration test, antivirus certification or provider approval.
 
@@ -63,7 +93,7 @@ The following entries record the package's disposition against each numbered gui
 | 14 | Release discipline documented; future commit behavior is a maintainer obligation. |
 | 15 | Version/header/stable tag aligned at 1.1.1. |
 | 16 | Runtime implementation present; provider acceptance remains an explicit release gate. |
-| 17 | Generic-leading slug cardraabta-payment-gateway-for-jazzcash; user-selected display title and non-endorsement statement. Title/slug approval remains subject to reviewer discretion. |
+| 17 | Generic-leading slug cardraabta-jazzcash-payment-gateway-for-woocommerce; user-selected display title and non-endorsement statement. Title/slug approval remains subject to reviewer discretion. |
 | 18 | Directory review discretion acknowledged. |
 
 Privacy/merchant obligations are disclosed rather than certified. Read the actual merchant agreement for the account; obtain legal/PCI advice if required for the store's operation. No real merchant contract or WordPress.org account ownership was supplied for verification.
@@ -98,6 +128,6 @@ This revision changes metadata and documentation, not payment processing. The ru
 
 ## Signed-in submission form — 1.1.3
 
-The authenticated upload form was reviewed on 14 October 2026. It explicitly requires a distinctive identifier and warns that generic names are unlikely to be accepted. The proposed name is now CardRaabta – Payment Gateway for JazzCash, with matching folder/text domain cardraabta-payment-gateway-for-jazzcash. Exact-name internet searches returned no matches; no legal trademark clearance is implied. The account email matches the address supplied by the user. Ownership, no-trialware and ongoing-guideline declarations await the owner's final confirmation. Earlier authentication-status notes describe preparation before this successful login.
+The authenticated upload form was reviewed on 14 October 2026. It explicitly requires a distinctive identifier and warns that generic names are unlikely to be accepted. The proposed name is now CardRaabta – JazzCash Payment Gateway for WooCommerce, with matching folder/text domain cardraabta-jazzcash-payment-gateway-for-woocommerce. Exact-name internet searches returned no matches; no legal trademark clearance is implied. The account email matches the address supplied by the user. Ownership, no-trialware and ongoing-guideline declarations await the owner's final confirmation. Earlier authentication-status notes describe preparation before this successful login.
 
 Payment behavior is unchanged. Existing gateway ID, callback routes and encrypted option names are retained. The old plugin must be deactivated before this newly named package is activated.

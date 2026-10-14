@@ -1,24 +1,24 @@
-=== CardRaabta – Payment Gateway for JazzCash ===
+=== CardRaabta – JazzCash Payment Gateway for WooCommerce ===
 Contributors: malikarslan
 Tags: woocommerce, payment gateway, credit card, jazzcash, pakistan
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 1.1.3
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Accept debit and credit card payments through JazzCash in WooCommerce. Includes Sandbox/Live modes, signed callbacks and 72-hour expiry.
+Accept JazzCash wallet and debit/credit card payments in WooCommerce, with Sandbox/Live modes, signed callbacks and 72-hour expiry.
 
 == Description ==
 
-Accept online debit and credit card payments in your WooCommerce store with the JazzCash Payment Gateway. Customers pay directly through JazzCash hosted checkout in PKR. Customers enter their card details on JazzCash. This is an independent integration by Malik Arslan (https://malikarslan.com), not an official or endorsed JazzCash, WordPress or WooCommerce product.
+Accept JazzCash Mobile Wallet and online debit/credit card payments in your WooCommerce store. Customers pay directly through JazzCash hosted checkout in PKR. Customers enter card or wallet details on JazzCash and approve wallet payments on their phone. This is an independent integration by Malik Arslan (https://malikarslan.com), not an official or endorsed JazzCash, WordPress or WooCommerce product.
 
 Features:
 
 * Separate Sandbox and Live merchant credentials and approved HTTPS payment URLs.
-* Classic checkout and Checkout Blocks integration, with HPOS order storage support.
+* Separate card and mobile-wallet methods on classic checkout and Checkout Blocks, with HPOS order storage support.
 * Default 72-hour transaction expiry calculated in Asia/Karachi.
 * HMAC-SHA256 request signing and mandatory signature verification for responses.
 * Order, reference, timestamp and amount validation; duplicate notification protection.
@@ -31,7 +31,7 @@ Requires WooCommerce 8.3+, PKR currency, HTTPS, PHP OpenSSL/iconv/DOM and MySQL/
 
 = External service and privacy =
 
-The plugin uses JazzCash to process the payment selected by the customer. When the customer presses "Continue to JazzCash", their browser submits order/payment references, amount, PKR currency, creation/expiry timestamps, return URL, merchant ID, payment password and request signature to the configured JazzCash endpoint. The Integrity Salt is never submitted. This version does not submit billing names, email addresses, telephone numbers or addresses. JazzCash receives the customer's browser/IP information during that visit and collects card details on its own page.
+The plugin uses JazzCash to process the payment selected by the customer. When the customer presses "Continue to JazzCash", their browser submits order/payment references, amount, PKR currency, creation/expiry timestamps, return URL, merchant ID, payment password and request signature to the configured JazzCash endpoint. The Integrity Salt is never submitted. This version does not submit billing names, email addresses, telephone numbers or addresses. JazzCash receives the customer's browser/IP information during that visit and collects card or wallet details on its own page; wallet approval happens on the payer’s phone.
 
 Service domains are sandbox.jazzcash.com.pk and payments.jazzcash.com.pk. The plugin receives authenticated status callbacks to update WooCommerce orders. It stores payment-attempt metadata, status and transaction references with the order. Debug logs contain fixed event codes and order IDs only, and use WooCommerce's log-retention settings. It has no telemetry, advertising, tracking pixels, third-party JavaScript or external updater.
 
@@ -58,6 +58,11 @@ JazzCash's documented page-redirection protocol includes pp_Password in the brow
 
 == Frequently Asked Questions ==
 
+= How do I enable JazzCash wallet payments? =
+
+After JazzCash approves MWALLET for your merchant account, enable JazzCash Mobile Wallet under WooCommerce > Settings > Payments. Shared credentials, mode, expiry and wallet URLs are configured under the card gateway settings. Configure separate wallet redirect URLs if issued by JazzCash; a blank wallet URL uses the existing mode URL. Both checkout methods share that mode's encrypted merchant credentials, expiry and debug controls. Wallet can be enabled while card payments are disabled. Phone/CNIC and MPIN are handled by JazzCash, not collected or stored by this plugin. Register the same signed return and SOAP IPN routes for the approved profile.
+
+
 = Does it support Sandbox and Live? =
 
 Yes. Each mode uses separate credentials and endpoint settings. A successful sandbox response marks a test order paid, so use a staging store.
@@ -76,13 +81,20 @@ No. WooCommerce's stock-hold setting is separate. Review that setting; 4320 minu
 
 = Are refunds or saved cards supported? =
 
-Not in this version. Process refunds through JazzCash and record them in WooCommerce. Recurring payments, wallet/OTC and tokenization are not included.
+Not in this version. Process refunds through JazzCash and record them in WooCommerce. Recurring payments, OTC vouchers and tokenization are not included.
 
 = What happens on deletion? =
 
 Plugin deletion removes credentials/settings for the current site but retains order accounting records. On multisite, clear settings on each site before network deletion. Deactivation alone retains settings. Constants in wp-config.php must be removed separately.
 
 == Changelog ==
+
+= 1.2.0 =
+* Add hosted JazzCash Mobile Wallet as a separate opt-in checkout method.
+* Bind each saved payment attempt to its card or wallet instrument.
+* Apply existing signature, order, replay, expiry and reconciliation checks to wallet callbacks.
+* Support wallet payments in Checkout Blocks and HPOS.
+* Align the WooCommerce-focused name and slug, and expand wallet tests.
 
 = 1.1.3 =
 * Add the distinctive CardRaabta identifier required by the signed-in submission form.

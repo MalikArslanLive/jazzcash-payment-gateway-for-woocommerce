@@ -9,6 +9,7 @@ function __( $s, $d = '' ) {
 function esc_html__($s, $d = '') { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
 function wp_unslash( $s ) {
 	return stripslashes( $s ); }
+function get_option( $key, $default = false ) { global $test_options; return $test_options[$key] ?? $default; }
 function wp_salt( $scheme ) {
 	return 'FAKE-TEST-WORDPRESS-SALT-' . $scheme; }
 class WC_Payment_Gateway {
@@ -31,9 +32,9 @@ function wc_get_order( $id ) {
 	global $orders;
 	return $orders[ $id ] ?? false; }
 class Test_Order {
-	public $meta = array(), $status = 'pending', $notes = array(), $complete_count = 0, $paid = false, $total = '100.25', $currency = 'PKR';
+	public $meta = array(), $status = 'pending', $notes = array(), $complete_count = 0, $paid = false, $total = '100.25', $currency = 'PKR', $payment_method = 'jccg';
 	function get_payment_method() {
-		return 'jccg'; }
+		return $this->payment_method; }
 	function get_meta( $k ) {
 		return $this->meta[ $k ] ?? ''; }
 	function update_meta_data( $k, $v ) {

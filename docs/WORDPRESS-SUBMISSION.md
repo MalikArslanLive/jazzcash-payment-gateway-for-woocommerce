@@ -1,15 +1,15 @@
 # WordPress.org submission preparation
 
-Plugin: CardRaabta – Payment Gateway for JazzCash
-Version: 1.1.3
-Expected slug/text domain: cardraabta-payment-gateway-for-jazzcash
+Plugin: CardRaabta – JazzCash Payment Gateway for WooCommerce
+Version: 1.2.0
+Expected slug/text domain: cardraabta-jazzcash-payment-gateway-for-woocommerce
 Account supplied by user: malikarslan
 Author: Malik Arslan
 Author URI: https://malikarslan.com
 
 ## Overview for reviewers
 
-An independent WooCommerce integration for JazzCash hosted debit and credit card payments in PKR. It includes separate Sandbox/Live merchant settings, signed return and SOAP IPN validation, a configurable 72-hour default expiry, encrypted settings, duplicate-payment protection, Checkout Blocks and HPOS support. Customers enter card data on JazzCash. The readme documents the service, data flow, terms, privacy notice, browser-visible hosted-form payment password and unsupported features.
+An independent WooCommerce integration for JazzCash hosted Mobile Wallet and debit/credit card payments in PKR. It includes separate Sandbox/Live merchant settings, signed return and SOAP IPN validation, a configurable 72-hour default expiry, encrypted settings, duplicate-payment protection, Checkout Blocks and HPOS support. Customers enter card or wallet data on JazzCash and approve wallet payment on their phone. The readme documents the service, data flow, terms, privacy notice, browser-visible hosted-form payment password and unsupported features.
 
 ## Public requirements reviewed 14 October 2026
 
@@ -25,6 +25,8 @@ Not submitted. Signed in successfully as Malik Arslan on 14 October 2026. The fu
 
 ## Signed-in form review
 
-The authenticated form explicitly discourages generic names and requires a unique project identifier. CardRaabta was searched exactly on the internet and in WordPress-related results on 14 October 2026; no exact matches were returned. This is not trademark clearance. Proposed final title: CardRaabta – Payment Gateway for JazzCash. Proposed slug: cardraabta-payment-gateway-for-jazzcash.
+The authenticated form explicitly discourages generic names and requires a unique project identifier. CardRaabta was searched exactly on the internet and in WordPress-related results on 14 October 2026; no exact matches were returned. This is not trademark clearance. Proposed final title: CardRaabta – JazzCash Payment Gateway for WooCommerce. Proposed slug: cardraabta-jazzcash-payment-gateway-for-woocommerce.
 
 The plugin has no trialware, paid code unlock, arbitrary code editor/execution or external executable download. Its JazzCash-specific signed SOAP adapter and defensive payment reconciliation are documented. Plugin Check confirmation will use the final release build's check results. The owner must approve the declarations shown in the actual form; they have not been accepted automatically.
+
+Version 1.2.0 adds the requested hosted Mobile Wallet method using the documented v1.1 MWALLET profile. Existing signing, amount/order/mode checks, expiry, locking and reconciliation rules apply to both instruments. Each saved attempt is bound to its original card/wallet instrument. No real merchant transaction is claimed. Current plugin title is CardRaabta – JazzCash Payment Gateway for WooCommerce; the matching slug is cardraabta-jazzcash-payment-gateway-for-woocommerce.

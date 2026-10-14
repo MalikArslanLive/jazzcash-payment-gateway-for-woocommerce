@@ -25,10 +25,12 @@ jobs:
         run: |
           find . -name '*.php' -not -path './vendor/*' -print0 | xargs -0 -n1 php -l
           php tests/security.php
+          php tests/wallet.php
           php tests/bootstrap.php
       - name: JavaScript syntax and release package
         run: |
           node --check assets/blocks.js
+          node tests/blocks.js
           python3 tools/security_scan.py
           python3 tools/build.py
   wordpress-directory:
@@ -41,10 +43,10 @@ jobs:
         run: |
           python3 tools/build.py
           mkdir -p dist/unpacked
-          unzip -q dist/cardraabta-payment-gateway-for-jazzcash-*.zip -d dist/unpacked
+          unzip -q dist/cardraabta-jazzcash-payment-gateway-for-woocommerce-*.zip -d dist/unpacked
       - uses: WordPress/plugin-check-action@10857da14b6c2246d15402b3e69f777edcf8c12e
         with:
-          build-dir: './dist/unpacked/cardraabta-payment-gateway-for-jazzcash'
-          slug: 'cardraabta-payment-gateway-for-jazzcash'
+          build-dir: './dist/unpacked/cardraabta-jazzcash-payment-gateway-for-woocommerce'
+          slug: 'cardraabta-jazzcash-payment-gateway-for-woocommerce'
           ignore-warnings: false
           ignore-errors: false
