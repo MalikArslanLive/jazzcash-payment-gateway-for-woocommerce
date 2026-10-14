@@ -1,0 +1,23 @@
+<?php
+defined( 'ABSPATH' ) || exit;
+final class AGJC_Blocks extends \Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType {
+	protected $name = 'jccg';
+	public function initialize() {
+		$this->settings = get_option( 'woocommerce_jccg_settings', array() ); }
+	public function is_active() {
+		$gateway = WC()->payment_gateways()->payment_gateways()['jccg'] ?? null;
+		return $gateway && $gateway->is_available();
+	}
+	public function get_payment_method_script_handles() {
+		wp_register_script( 'jccg-blocks', plugins_url( 'assets/blocks.js', AGJC_FILE ), array( 'wc-blocks-registry', 'wc-settings', 'wp-element', 'wp-html-entities' ), AGJC_VERSION, true );
+		return array( 'jccg-blocks' );
+	}
+	public function get_payment_method_data() {
+		$gateway = WC()->payment_gateways()->payment_gateways()['jccg'] ?? null;
+		return array(
+			'title'       => $gateway ? $gateway->get_title() : __('JazzCash Credit / Debit Card', 'payment-gateway-for-jazzcash'),
+			'description' => $this->get_setting( 'description', __('Pay securely by card on JazzCash.', 'payment-gateway-for-jazzcash') ),
+			'supports'    => array( 'products' ),
+		);
+	}
+}

@@ -1,0 +1,11 @@
+/.git
+/.github
+/docs
+/tests
+/tools
+/dist
+/.gitignore
+/.distignore
+/SECURITY.md
+/CONTRIBUTING.md
+/TEST-RESULTS.md

@@ -1,0 +1,326 @@
+# Copyright (C) 2026 Malik Arslan
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: JazzCash Payment Gateway for WooCommerce 1.1.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/payment-gateway-for-jazzcash\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-14T07:02:48+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: payment-gateway-for-jazzcash\n"
+
+#. Plugin Name of the plugin
+#: payment-gateway-for-jazzcash.php
+msgid "JazzCash Payment Gateway for WooCommerce"
+msgstr ""
+
+#. Description of the plugin
+#: payment-gateway-for-jazzcash.php
+msgid "Accept debit and credit card payments through JazzCash in WooCommerce, with Sandbox/Live modes, signed callbacks and configurable expiry."
+msgstr ""
+
+#. Author of the plugin
+#: payment-gateway-for-jazzcash.php
+msgid "Malik Arslan"
+msgstr ""
+
+#. Author URI of the plugin
+#: payment-gateway-for-jazzcash.php
+msgid "https://malikarslan.com"
+msgstr ""
+
+#: includes/class-jccg-blocks.php:18
+#: includes/class-jccg-gateway.php:7
+#: includes/class-jccg-gateway.php:13
+#: includes/class-jccg-gateway.php:33
+msgid "JazzCash Credit / Debit Card"
+msgstr ""
+
+#: includes/class-jccg-blocks.php:19
+msgid "Pay securely by card on JazzCash."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:8
+msgid "JazzCash hosted card checkout (PKR). Configure credentials and the merchant-approved payment URL. IPN requires JazzCash activation. See README.md."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:15
+msgid "(Sandbox test)"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:16
+#: includes/class-jccg-gateway.php:38
+msgid "Pay securely by credit or debit card on JazzCash."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:25
+msgid "Enable"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:27
+msgid "Enable JazzCash card payments"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:31
+msgid "Checkout title"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:36
+msgid "Checkout description"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:41
+msgid "Mode"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:45
+msgid "Sandbox (test)"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:46
+#: includes/class-jccg-gateway.php:69
+msgid "Live"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:50
+msgid "Transaction expiry (hours)"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:58
+msgid "Default: 72 hours. Calculated in Asia/Karachi. This does not change WooCommerce stock hold settings."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:61
+msgid "Debug logging"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:63
+msgid "Log safe event codes and order IDs only"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:68
+msgid "Sandbox"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:72
+msgid "credentials"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:76
+msgid "Merchant ID"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:77
+msgid "Password"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:78
+msgid "Integrity Salt"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:83
+msgid "Leave blank to retain. Enter __CLEAR__ to remove. Encrypted using this WordPress installation’s salts."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:87
+msgid "payment URL"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:90
+msgid "Paste the HTTPS page-redirection URL issued by JazzCash. Sandbox accepts sandbox.jazzcash.com.pk; Live accepts payments.jazzcash.com.pk."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:100
+msgid "Callback URLs"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:100
+msgid "Return URL:"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:101
+msgid "SOAP IPN URL:"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:102
+msgid "WSDL:"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:103
+msgid "Enable signed responses and IPN in your JazzCash merchant profile. Register the WSDL with JazzCash and validate the acknowledgement in sandbox before Live mode."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:104
+msgid "Hosted checkout: the JazzCash redirect form includes pp_Password, visible in the browser source. The Integrity Salt stays on your server. Use dedicated payment credentials, never an account-login password."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:106
+msgid "Gateway unavailable: check HTTPS, PKR currency, required PHP extensions, credentials and payment URL."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:111
+msgid "Saved — leave blank to retain"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:111
+msgid "Not configured"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:132
+msgid "Invalid credential."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:139
+msgid "Credentials must be printable ASCII without spaces."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:141
+msgid "OpenSSL is required."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:146
+msgid "Unable to save credential."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:169
+msgid "Expiry must be between 1 and 2160 whole hours."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:214
+msgid "Payment is being updated. Please try again."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:225
+msgid "JazzCash is unavailable. Please contact the store."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:228
+msgid "This order cannot be paid using JazzCash."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:249
+msgid "Payment link is unavailable."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:254
+msgid "Order is no longer payable."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:261
+msgid "An existing payment attempt needs store review before this order can be changed."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:264
+msgid "This payment attempt has expired. Contact the store before making another payment."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:268
+msgid "Please contact the store to review this payment."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:272
+msgid "Order reference is too long."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:289
+msgid "Merchant credentials changed. Contact the store."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:308
+msgid "You will enter your card details on JazzCash."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:310
+msgid "Sandbox test payment — no live payment."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:314
+msgid "Continue to JazzCash"
+msgstr ""
+
+#: includes/class-jccg-gateway.php:327
+msgid "Too many fields."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:330
+msgid "Invalid fields."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:334
+msgid "Unknown transaction."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:340
+msgid "Unknown order."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:344
+msgid "Unknown attempt."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:347
+msgid "Signature failed."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:349
+msgid "Transaction date mismatch."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:352
+msgid "Missing status."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:356
+msgid "IPN credentials mismatch."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:366
+#: includes/class-jccg-gateway.php:379
+msgid "Payment details mismatch."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:371
+msgid "Order total changed; manual reconciliation required."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:386
+msgid "Missing payment reference."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:399
+msgid "Order status requires review."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:433
+#: includes/class-jccg-gateway.php:440
+msgid "Request too large."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:437
+msgid "SOAP IPN required."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:446
+msgid "Unsupported content type."
+msgstr ""
+
+#: includes/class-jccg-gateway.php:467
+msgid "Payment response could not be verified. Please contact the store before paying again."
+msgstr ""
+
+#: payment-gateway-for-jazzcash.php:22
+msgid "Deactivate the previous JazzCash Card Gateway plugin before activating this release. Settings and order records are retained."
+msgstr ""
+
+#: payment-gateway-for-jazzcash.php:48
+msgid "When you choose JazzCash, the order reference, amount, currency, payment timestamps and return address are sent to JazzCash to process your payment. Card information is entered on JazzCash. Payment references and status are retained with your order. This plugin does not add analytics or advertising trackers. Contact the store regarding order retention and privacy requests."
+msgstr ""
+
+#: payment-gateway-for-jazzcash.php:108
+msgid "Settings"
+msgstr ""

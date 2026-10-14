@@ -1,0 +1,51 @@
+PASS: official JazzCash HMAC vector
+PASS: valid signature
+PASS: tampered amount rejected
+PASS: paisa conversion
+PASS: one paisa retained
+PASS: leading zeros normalized
+PASS: excess precision rejected
+PASS: negative rejected
+PASS: zero rejected
+PASS: scientific notation rejected
+PASS: 72 hours across year boundary in Karachi
+PASS: 72 elapsed hours exactly
+PASS: zero expiry rejected
+PASS: secret stored encrypted
+PASS: blank preserves secret
+PASS: explicit secret removal
+PASS: valid callback completes order
+PASS: replayed success completes once
+PASS: later failure cannot downgrade paid order
+PASS: forged callback rejected
+PASS: forgery never fulfils order
+PASS: signed wrong amount rejected
+PASS: signed wrong currency rejected
+PASS: signed wrong merchant rejected
+PASS: wrong transaction date rejected
+PASS: unknown attempt rejected
+PASS: edited order amount rejected
+PASS: cancelled payment queued for manual reconciliation
+PASS: review note not duplicated
+PASS: refund cannot be resurrected
+PASS: ambiguous status held for review
+PASS: later verified success completes held order
+PASS: SOAP parser preserves signed field values
+PASS: documented SOAP without amount verifies stored attempt
+PASS: fixed width SOAP acknowledgement
+PASS: external entities rejected
+PASS: duplicate SOAP fields rejected
+PASS: wrong SOAP password rejected
+PASS: late sandbox callback uses original mode credentials
+
+39 checks passed.
+PASS: HTTP form parsing preserves signature fields
+PASS: duplicate HTTP form fields rejected
+PASS: PHP array-style form fields rejected
+PASS: oversized callback rejected
+PASS: malformed response JSON rejected
+PASS: ambiguous wrapped plus flat response rejected
+PASS: missing hash rejected
+PASS: empty hash rejected
+PASS: zero-valued signing field not dropped
+Total: 48 regression checks passed.

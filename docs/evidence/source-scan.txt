@@ -1,0 +1,2 @@
+PASS: 6 runtime PHP/JavaScript files checked; no listed dangerous sinks found.
+Scope: regex tripwire plus separate manual review. Not an antivirus signature scan or penetration-test certification.

@@ -1,0 +1,10 @@
+No syntax errors detected in arslan-card-gateway-jazzcash/arslan-card-gateway-jazzcash.php
+No syntax errors detected in arslan-card-gateway-jazzcash/includes/class-jccg-blocks.php
+No syntax errors detected in arslan-card-gateway-jazzcash/includes/class-jccg-gateway.php
+No syntax errors detected in arslan-card-gateway-jazzcash/includes/class-jccg-protocol.php
+No syntax errors detected in arslan-card-gateway-jazzcash/tests/http-fixture.php
+No syntax errors detected in arslan-card-gateway-jazzcash/tests/integration.php
+No syntax errors detected in arslan-card-gateway-jazzcash/tests/run.php
+No syntax errors detected in arslan-card-gateway-jazzcash/tests/security.php
+No syntax errors detected in arslan-card-gateway-jazzcash/uninstall.php
+PASS: JavaScript syntax

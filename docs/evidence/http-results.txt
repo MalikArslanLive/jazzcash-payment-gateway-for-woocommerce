@@ -1,0 +1,23 @@
+PASS public WSDL returns XML
+PASS GET payment callback rejected
+PASS sandbox duplicate form key rejected
+PASS sandbox forged return rejected
+PASS sandbox valid return acknowledged
+PASS sandbox duplicate return acknowledged
+PASS sandbox return paid status persisted
+PASS sandbox forged ipn rejected
+PASS sandbox valid ipn acknowledged
+PASS sandbox SOAP acknowledgement fixed width
+PASS sandbox duplicate ipn acknowledged
+PASS sandbox ipn paid status persisted
+PASS live duplicate form key rejected
+PASS live forged return rejected
+PASS live valid return acknowledged
+PASS live duplicate return acknowledged
+PASS live return paid status persisted
+PASS live forged ipn rejected
+PASS live valid ipn acknowledged
+PASS live SOAP acknowledgement fixed width
+PASS live duplicate ipn acknowledged
+PASS live ipn paid status persisted
+22 HTTP endpoint checks passed with synthetic provider messages.

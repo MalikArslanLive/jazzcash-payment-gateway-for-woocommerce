@@ -1,0 +1,78 @@
+PASS: sandbox gateway available (HPOS no)
+PASS: expected authoritative order data store active
+PASS: checkout produces authenticated pay link
+PASS: real receipt emits verifiable request
+PASS: real receipt uses paisa and card type
+PASS: integrity salt absent from receipt
+PASS: receipt expiry is 72 hours
+PASS: reload reuses same attempt
+PASS: forged payment rejected on real order
+PASS: valid signed success pays real order
+PASS: stock reduced once
+PASS: duplicate success does not reduce stock again
+PASS: failure cannot downgrade real paid order
+PASS: invalid order key exposes no payment form
+PASS: live gateway available (HPOS no)
+PASS: expected authoritative order data store active
+PASS: checkout produces authenticated pay link
+PASS: real receipt emits verifiable request
+PASS: real receipt uses paisa and card type
+PASS: integrity salt absent from receipt
+PASS: receipt expiry is 72 hours
+PASS: reload reuses same attempt
+PASS: forged payment rejected on real order
+PASS: valid signed success pays real order
+PASS: stock reduced once
+PASS: duplicate success does not reduce stock again
+PASS: failure cannot downgrade real paid order
+PASS: invalid order key exposes no payment form
+PASS: sandbox gateway available (HPOS yes)
+PASS: expected authoritative order data store active
+PASS: checkout produces authenticated pay link
+PASS: real receipt emits verifiable request
+PASS: real receipt uses paisa and card type
+PASS: integrity salt absent from receipt
+PASS: receipt expiry is 72 hours
+PASS: reload reuses same attempt
+PASS: forged payment rejected on real order
+PASS: valid signed success pays real order
+PASS: stock reduced once
+PASS: duplicate success does not reduce stock again
+PASS: failure cannot downgrade real paid order
+PASS: invalid order key exposes no payment form
+PASS: live gateway available (HPOS yes)
+PASS: expected authoritative order data store active
+PASS: checkout produces authenticated pay link
+PASS: real receipt emits verifiable request
+PASS: real receipt uses paisa and card type
+PASS: integrity salt absent from receipt
+PASS: receipt expiry is 72 hours
+PASS: reload reuses same attempt
+PASS: forged payment rejected on real order
+PASS: valid signed success pays real order
+PASS: stock reduced once
+PASS: duplicate success does not reduce stock again
+PASS: failure cannot downgrade real paid order
+PASS: invalid order key exposes no payment form
+PASS: admin never renders saved credentials
+PASS: unauthorized settings update rejected
+PASS: lookalike endpoint rejected
+PASS: HTTP endpoint rejected
+PASS: userinfo endpoint rejected
+PASS: alternate endpoint port rejected
+PASS: HTTP checkout unavailable
+PASS: non-PKR store unavailable
+PASS: Blocks public settings contain no credentials
+PASS: Blocks script registered
+PASS: another database connection cannot acquire held order mutex
+PASS: order mutex released for next connection
+PASS: invalid settings nonce rejected
+PASS: settings save preserves slashed credential characters
+PASS: credential settings excluded from autoload
+PASS: unauthorized pending-order receipt creates no payment attempt
+PASS: unauthorized pending-order receipt creates no payment attempt
+PASS: unauthorized pending-order receipt creates no payment attempt
+PASS: hosted form escapes executable markup in credential attributes
+PASS: ordinary customer cannot change payment settings
+PASS: ordinary customer cannot render gateway administration
+Success: 77 WordPress/WooCommerce integration checks passed. Provider responses were locally signed fixtures, not real JazzCash transactions.
