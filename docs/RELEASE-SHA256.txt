@@ -1,1 +1,1 @@
-86b0ec0448226564d2e139583e77165d85b937f7d079be9c4ae26a9ff48505a1  payment-gateway-for-jazzcash-1.1.1.zip
+5b852f95b58d91a3ac214948618b603f31ba7432cddcec0b268b3b6dd0ea5b8e  payment-gateway-for-jazzcash-1.1.2.zip

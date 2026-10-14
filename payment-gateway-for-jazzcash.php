@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: JazzCash Payment Gateway for WooCommerce
+ * Plugin Name: Payment Gateway for JazzCash
  * Description: Accept debit and credit card payments through JazzCash in WooCommerce, with Sandbox/Live modes, signed callbacks and configurable expiry.
- * Version: 1.1.1
+ * Version: 1.1.2
  * Requires at least: 6.5
  * Requires PHP: 8.1
  * WC requires at least: 8.3
@@ -28,7 +28,7 @@ if ( defined( 'AGJC_FILE' ) ) {
 	return;
 }
 define( 'AGJC_FILE', __FILE__ );
-define( 'AGJC_VERSION', '1.1.1' );
+define( 'AGJC_VERSION', '1.1.2' );
 add_action(
 	'template_redirect',
 	static function () {
@@ -44,7 +44,7 @@ add_action(
 	static function () {
 		if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
 			wp_add_privacy_policy_content(
-				'JazzCash Payment Gateway for WooCommerce',
+				'Payment Gateway for JazzCash',
 				'<p>' . esc_html__( 'When you choose JazzCash, the order reference, amount, currency, payment timestamps and return address are sent to JazzCash to process your payment. Card information is entered on JazzCash. Payment references and status are retained with your order. This plugin does not add analytics or advertising trackers. Contact the store regarding order retention and privacy requests.', 'payment-gateway-for-jazzcash' ) . '</p>'
 			);
 		}

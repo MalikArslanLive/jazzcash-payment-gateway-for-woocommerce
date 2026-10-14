@@ -1,10 +1,11 @@
-=== JazzCash Payment Gateway for WooCommerce ===
+=== Payment Gateway for JazzCash ===
+Contributors: malikarslan
 Tags: woocommerce, payment gateway, credit card, jazzcash, pakistan
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -82,6 +83,11 @@ Not in this version. Process refunds through JazzCash and record them in WooComm
 Plugin deletion removes credentials/settings for the current site but retains order accounting records. On multisite, clear settings on each site before network deletion. Deactivation alone retains settings. Constants in wp-config.php must be removed separately.
 
 == Changelog ==
+
+= 1.1.2 =
+* Align display name with the generic-leading WordPress.org slug.
+* Add confirmed WordPress.org contributor malikarslan.
+* Refresh submission documentation.
 
 = 1.1.1 =
 * Rename the plugin and improve payment-focused title and description.

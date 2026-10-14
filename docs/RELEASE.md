@@ -1,6 +1,6 @@
 # Release and merchant acceptance
 
-Release 1.1.1 is prepared for merchant acceptance and WordPress.org submission review. It is not provider-certified. Do not accept live payments until the checklist below is complete.
+Release 1.1.2 is prepared for merchant acceptance and WordPress.org submission review. It is not provider-certified. Do not accept live payments until the checklist below is complete.
 
 ## Merchant setup
 
@@ -12,11 +12,11 @@ Record evidence from real JazzCash for classic and block checkouts: success, dec
 
 Source repository: `MalikArslanLive/jazzcash-payment-gateway-for-woocommerce`.
 
-The source kit includes all readable code, GPL license, tests, build script, contribution/security guidance and pinned GitHub Actions. The repository contains the source at its root. CI needs no payment secrets. Enable private vulnerability reporting, branch protection and secret scanning where available. Require checks before merging; tag the reviewed commit `v1.1.1` and attach the installable ZIP plus checksums to a release after acceptance. GitHub Actions runs are separate from the recorded local checks; inspect the repository Actions page for the status of each commit.
+The source kit includes all readable code, GPL license, tests, build script, contribution/security guidance and pinned GitHub Actions. The repository contains the source at its root. CI needs no payment secrets. Enable private vulnerability reporting, branch protection and secret scanning where available. Require checks before merging; tag the reviewed commit `v1.1.2` and attach the installable ZIP plus checksums to a release after acceptance. GitHub Actions runs are separate from the recorded local checks; inspect the repository Actions page for the status of each commit.
 
 ## WordPress.org
 
-Use the maintainer's real WordPress.org account and monitored contact email. Confirm the proposed name/slug is available. Do not fabricate a Contributors username; add the verified WordPress.org username when known. Submit the runtime ZIP, not the source kit. Respond to reviewers and complete requested changes. After approval, keep the full runtime source and matching version in the assigned SVN repository and increment versions for later changes. No automatic directory approval is claimed.
+Use the maintainer's real WordPress.org account and monitored contact email. Confirm the proposed name/slug is available. The user supplied WordPress.org username malikarslan; it is now listed in Contributors. Confirm the signed-in account matches before upload. Submit the runtime ZIP, not the source kit. Respond to reviewers and complete requested changes. After approval, keep the full runtime source and matching version in the assigned SVN repository and increment versions for later changes. No automatic directory approval is claimed.
 
 ## Reproduce checks
 

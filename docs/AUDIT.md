@@ -89,3 +89,9 @@ Consulted 13 October 2026:
 - https://developer.woocommerce.com/docs/block-development/extensible-blocks/cart-and-checkout-blocks/checkout-payment-methods/payment-method-integration
 
 JazzCash current service, terms, privacy notice and merchant agreement links are in `readme.txt`. The provider's private onboarding profile must resolve any mismatch with the public protocol documents.
+
+## WordPress.org submission preparation — 1.1.2
+
+On 14 October 2026, the official submission page, current Plugin Developer FAQ and detailed guidelines were reviewed. The FAQ explicitly prohibits a third-party display name beginning with another brand. The display name was corrected to Payment Gateway for JazzCash, matching the existing payment-gateway-for-jazzcash slug/text domain. The user's supplied WordPress.org username malikarslan was added to Contributors. Author name and Author URI remain Malik Arslan and https://malikarslan.com.
+
+This revision changes metadata and documentation, not payment processing. The runtime ZIP remains below 10 MB and excludes development tools, tests, source reports and nested ZIP files. Authentication was not completed, so account-specific upload requirements and the final form have not yet been inspected. No WordPress.org submission or approval is claimed. Real merchant acceptance remains outstanding.

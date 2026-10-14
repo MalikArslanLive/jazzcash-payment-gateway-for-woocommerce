@@ -1,4 +1,4 @@
-# JazzCash Payment Gateway for WooCommerce — 1.1.1
+# Payment Gateway for JazzCash — 1.1.2
 
 Accept debit and credit card payments directly through JazzCash in your WooCommerce store. Includes separate Sandbox and Live settings, 72-hour default expiry, signed payment callbacks, Checkout Blocks and HPOS support.
 
@@ -6,7 +6,7 @@ Developed by [Malik Arslan](https://malikarslan.com). Not an official or endorse
 
 ## Download
 
-[Download the installable plugin ZIP](downloads/payment-gateway-for-jazzcash-1.1.1.zip?raw=true) · [Security review](docs/AUDIT.md) · [Merchant acceptance checklist](docs/RELEASE.md)
+[Download the installable plugin ZIP](downloads/payment-gateway-for-jazzcash-1.1.2.zip?raw=true) · [Security review](docs/AUDIT.md) · [Merchant acceptance checklist](docs/RELEASE.md)
 
 Use the installable ZIP for WordPress. GitHub’s source-code ZIP includes development files. Real JazzCash merchant acceptance remains required before live use.
 
