@@ -63,7 +63,7 @@ The following entries record the package's disposition against each numbered gui
 | 14 | Release discipline documented; future commit behavior is a maintainer obligation. |
 | 15 | Version/header/stable tag aligned at 1.1.1. |
 | 16 | Runtime implementation present; provider acceptance remains an explicit release gate. |
-| 17 | Generic-leading slug payment-gateway-for-jazzcash; user-selected display title and non-endorsement statement. Title/slug approval remains subject to reviewer discretion. |
+| 17 | Generic-leading slug cardraabta-payment-gateway-for-jazzcash; user-selected display title and non-endorsement statement. Title/slug approval remains subject to reviewer discretion. |
 | 18 | Directory review discretion acknowledged. |
 
 Privacy/merchant obligations are disclosed rather than certified. Read the actual merchant agreement for the account; obtain legal/PCI advice if required for the store's operation. No real merchant contract or WordPress.org account ownership was supplied for verification.
@@ -92,6 +92,12 @@ JazzCash current service, terms, privacy notice and merchant agreement links are
 
 ## WordPress.org submission preparation — 1.1.2
 
-On 14 October 2026, the official submission page, current Plugin Developer FAQ and detailed guidelines were reviewed. The FAQ explicitly prohibits a third-party display name beginning with another brand. The display name was corrected to Payment Gateway for JazzCash, matching the existing payment-gateway-for-jazzcash slug/text domain. The user's supplied WordPress.org username malikarslan was added to Contributors. Author name and Author URI remain Malik Arslan and https://malikarslan.com.
+On 14 October 2026, the official submission page, current Plugin Developer FAQ and detailed guidelines were reviewed. The FAQ explicitly prohibits a third-party display name beginning with another brand. In 1.1.2, the display name was corrected to Payment Gateway for JazzCash, matching the then-current payment-gateway-for-jazzcash slug/text domain. The user's supplied WordPress.org username malikarslan was added to Contributors. Author name and Author URI remain Malik Arslan and https://malikarslan.com.
 
 This revision changes metadata and documentation, not payment processing. The runtime ZIP remains below 10 MB and excludes development tools, tests, source reports and nested ZIP files. Authentication was not completed, so account-specific upload requirements and the final form have not yet been inspected. No WordPress.org submission or approval is claimed. Real merchant acceptance remains outstanding.
+
+## Signed-in submission form — 1.1.3
+
+The authenticated upload form was reviewed on 14 October 2026. It explicitly requires a distinctive identifier and warns that generic names are unlikely to be accepted. The proposed name is now CardRaabta – Payment Gateway for JazzCash, with matching folder/text domain cardraabta-payment-gateway-for-jazzcash. Exact-name internet searches returned no matches; no legal trademark clearance is implied. The account email matches the address supplied by the user. Ownership, no-trialware and ongoing-guideline declarations await the owner's final confirmation. Earlier authentication-status notes describe preparation before this successful login.
+
+Payment behavior is unchanged. Existing gateway ID, callback routes and encrypted option names are retained. The old plugin must be deactivated before this newly named package is activated.

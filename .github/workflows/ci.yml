@@ -41,10 +41,10 @@ jobs:
         run: |
           python3 tools/build.py
           mkdir -p dist/unpacked
-          unzip -q dist/payment-gateway-for-jazzcash-*.zip -d dist/unpacked
+          unzip -q dist/cardraabta-payment-gateway-for-jazzcash-*.zip -d dist/unpacked
       - uses: WordPress/plugin-check-action@10857da14b6c2246d15402b3e69f777edcf8c12e
         with:
-          build-dir: './dist/unpacked/payment-gateway-for-jazzcash'
-          slug: 'payment-gateway-for-jazzcash'
+          build-dir: './dist/unpacked/cardraabta-payment-gateway-for-jazzcash'
+          slug: 'cardraabta-payment-gateway-for-jazzcash'
           ignore-warnings: false
           ignore-errors: false

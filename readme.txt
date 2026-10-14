@@ -1,11 +1,11 @@
-=== Payment Gateway for JazzCash ===
+=== CardRaabta – Payment Gateway for JazzCash ===
 Contributors: malikarslan
 Tags: woocommerce, payment gateway, credit card, jazzcash, pakistan
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,7 +48,7 @@ JazzCash's documented page-redirection protocol includes pp_Password in the brow
 
 == Installation ==
 
-1. Back up your site and deactivate the earlier 1.0.0 or 1.1.0 build if installed. Do not run both builds together.
+1. Back up your site and deactivate the earlier 1.0.0–1.1.2 build if installed. Do not run both builds together.
 2. Upload and activate this plugin with WooCommerce active.
 3. Open WooCommerce > Settings > Payments > JazzCash Credit / Debit Card.
 4. Choose Sandbox, enter sandbox credentials and the merchant-issued HTTPS page-redirection URL, and retain the default 72-hour expiry if suitable.
@@ -83,6 +83,11 @@ Not in this version. Process refunds through JazzCash and record them in WooComm
 Plugin deletion removes credentials/settings for the current site but retains order accounting records. On multisite, clear settings on each site before network deletion. Deactivation alone retains settings. Constants in wp-config.php must be removed separately.
 
 == Changelog ==
+
+= 1.1.3 =
+* Add the distinctive CardRaabta identifier required by the signed-in submission form.
+* Align plugin folder, text domain and translations with the proposed directory slug.
+* Preserve previous gateway settings and block simultaneous activation of older builds.
 
 = 1.1.2 =
 * Align display name with the generic-leading WordPress.org slug.

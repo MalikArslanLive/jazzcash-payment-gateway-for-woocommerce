@@ -3,7 +3,7 @@
 from pathlib import Path
 import re, zipfile, hashlib
 root=Path(__file__).resolve().parents[1]
-slug='payment-gateway-for-jazzcash'
+slug='cardraabta-payment-gateway-for-jazzcash'
 version=re.search(r'Version:\s*([^\s]+)',(root/(slug+'.php')).read_text()).group(1)
 files=[root/(slug+'.php'),root/'uninstall.php',root/'readme.txt',root/'README.md',root/'LICENSE']
 for name in ['includes','assets','languages']:

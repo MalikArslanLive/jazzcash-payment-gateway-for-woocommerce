@@ -1,8 +1,8 @@
 # WordPress.org submission preparation
 
-Plugin: Payment Gateway for JazzCash
-Version: 1.1.2
-Expected slug/text domain: payment-gateway-for-jazzcash
+Plugin: CardRaabta – Payment Gateway for JazzCash
+Version: 1.1.3
+Expected slug/text domain: cardraabta-payment-gateway-for-jazzcash
 Account supplied by user: malikarslan
 Author: Malik Arslan
 Author URI: https://malikarslan.com
@@ -21,4 +21,10 @@ Runtime ZIP: installable WordPress structure, below 10 MB, GPL-compatible readab
 
 ## Status
 
-Not submitted. Secure browser login was not completed; signed-in upload requirements and account eligibility remain uninspected. Do not claim real JazzCash merchant testing or directory approval. Confirm public TLS, real sandbox authorization and provider-sent IPN acceptance before production use.
+Not submitted. Signed in successfully as Malik Arslan on 14 October 2026. The full account-specific form was reviewed. It requires a distinctive name, owner permission, Plugin Check confirmation, no artificial functionality restrictions and ongoing guideline compliance. These account-owner declarations require final confirmation before submission. Do not claim real JazzCash merchant testing or directory approval. Confirm public TLS, real sandbox authorization and provider-sent IPN acceptance before production use.
+
+## Signed-in form review
+
+The authenticated form explicitly discourages generic names and requires a unique project identifier. CardRaabta was searched exactly on the internet and in WordPress-related results on 14 October 2026; no exact matches were returned. This is not trademark clearance. Proposed final title: CardRaabta – Payment Gateway for JazzCash. Proposed slug: cardraabta-payment-gateway-for-jazzcash.
+
+The plugin has no trialware, paid code unlock, arbitrary code editor/execution or external executable download. Its JazzCash-specific signed SOAP adapter and defensive payment reconciliation are documented. Plugin Check confirmation will use the final release build's check results. The owner must approve the declarations shown in the actual form; they have not been accepted automatically.

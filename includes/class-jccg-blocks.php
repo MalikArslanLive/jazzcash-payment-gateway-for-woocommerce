@@ -15,8 +15,8 @@ final class AGJC_Blocks extends \Automattic\WooCommerce\Blocks\Payments\Integrat
 	public function get_payment_method_data() {
 		$gateway = WC()->payment_gateways()->payment_gateways()['jccg'] ?? null;
 		return array(
-			'title'       => $gateway ? $gateway->get_title() : __('JazzCash Credit / Debit Card', 'payment-gateway-for-jazzcash'),
-			'description' => $this->get_setting( 'description', __('Pay securely by card on JazzCash.', 'payment-gateway-for-jazzcash') ),
+			'title'       => $gateway ? $gateway->get_title() : __('JazzCash Credit / Debit Card', 'cardraabta-payment-gateway-for-jazzcash'),
+			'description' => $this->get_setting( 'description', __('Pay securely by card on JazzCash.', 'cardraabta-payment-gateway-for-jazzcash') ),
 			'supports'    => array( 'products' ),
 		);
 	}

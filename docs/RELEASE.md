@@ -1,6 +1,6 @@
 # Release and merchant acceptance
 
-Release 1.1.2 is prepared for merchant acceptance and WordPress.org submission review. It is not provider-certified. Do not accept live payments until the checklist below is complete.
+Release 1.1.3 is prepared for merchant acceptance and WordPress.org submission review. It is not provider-certified. Do not accept live payments until the checklist below is complete.
 
 ## Merchant setup
 
@@ -12,7 +12,7 @@ Record evidence from real JazzCash for classic and block checkouts: success, dec
 
 Source repository: `MalikArslanLive/jazzcash-payment-gateway-for-woocommerce`.
 
-The source kit includes all readable code, GPL license, tests, build script, contribution/security guidance and pinned GitHub Actions. The repository contains the source at its root. CI needs no payment secrets. Enable private vulnerability reporting, branch protection and secret scanning where available. Require checks before merging; tag the reviewed commit `v1.1.2` and attach the installable ZIP plus checksums to a release after acceptance. GitHub Actions runs are separate from the recorded local checks; inspect the repository Actions page for the status of each commit.
+The source kit includes all readable code, GPL license, tests, build script, contribution/security guidance and pinned GitHub Actions. The repository contains the source at its root. CI needs no payment secrets. Enable private vulnerability reporting, branch protection and secret scanning where available. Require checks before merging; tag the reviewed commit `v1.1.3` and attach the installable ZIP plus checksums to a release after acceptance. GitHub Actions runs are separate from the recorded local checks; inspect the repository Actions page for the status of each commit.
 
 ## WordPress.org
 

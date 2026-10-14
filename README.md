@@ -1,12 +1,12 @@
-# Payment Gateway for JazzCash — 1.1.2
+# CardRaabta – Payment Gateway for JazzCash — 1.1.3
 
 Accept debit and credit card payments directly through JazzCash in your WooCommerce store. Includes separate Sandbox and Live settings, 72-hour default expiry, signed payment callbacks, Checkout Blocks and HPOS support.
 
-Developed by [Malik Arslan](https://malikarslan.com). Not an official or endorsed JazzCash plugin. Before upgrading the earlier 1.0.0 or 1.1.0 build, deactivate that plugin; the gateway ID and encrypted settings remain compatible. Do not run both builds together.
+Developed by [Malik Arslan](https://malikarslan.com). Not an official or endorsed JazzCash plugin. Before upgrading the earlier 1.0.0–1.1.2 build, deactivate that plugin; the gateway ID and encrypted settings remain compatible. Do not run both builds together.
 
 ## Download
 
-[Download the installable plugin ZIP](downloads/payment-gateway-for-jazzcash-1.1.2.zip?raw=true) · [Security review](docs/AUDIT.md) · [Merchant acceptance checklist](docs/RELEASE.md)
+[Download the installable plugin ZIP](downloads/cardraabta-payment-gateway-for-jazzcash-1.1.3.zip?raw=true) · [Security review](docs/AUDIT.md) · [Merchant acceptance checklist](docs/RELEASE.md)
 
 Use the installable ZIP for WordPress. GitHub’s source-code ZIP includes development files. Real JazzCash merchant acceptance remains required before live use.
 
@@ -32,7 +32,7 @@ Requirements: WordPress 6.5+, WooCommerce 8.3+, PHP 8.1+, OpenSSL, iconv, DOM/XM
 - HMAC-SHA256 request/response checking, constant-time signature comparison, unique transaction references and exact decimal-to-paisa conversion.
 - Return URL and SOAP IPN validate a persisted attempt before updating its order. Return responses require matching merchant, amount, currency, type and creation timestamp. The documented SOAP input has no amount/currency; its signature, password and transaction timestamp bind it to the saved original request, whose amount must still match the order.
 - Duplicate callback protection, database serialization of updates, and paid/refunded/cancelled order protection. Paid orders cannot be downgraded by later error notifications.
-- WooCommerce order CRUD for HPOS. Minimal logs under WooCommerce → Status → Logs → `payment-gateway-for-jazzcash`.
+- WooCommerce order CRUD for HPOS. Minimal logs under WooCommerce → Status → Logs → `cardraabta-payment-gateway-for-jazzcash`.
 
 ## Payment and stock behavior
 
