@@ -18,7 +18,7 @@ The 14 October revision changes display naming, description, author URI, plugin 
 | Runtime source tripwire | All 6 runtime PHP/JavaScript files passed the listed dangerous-sink scan |
 | Syntax | PHP lint and JavaScript syntax passed |
 
-Local environment: PHP 8.3.6, WordPress 7.1.3, WooCommerce 11.2.1 and MariaDB 10.11.14. The CI matrix for PHP 8.1–8.4 is configured, not executed on GitHub. Minimum supported versions are requirements, not a claim that every combination was tested. Test evidence is in `docs/evidence/`.
+Local environment: PHP 8.3.6, WordPress 7.1.3, WooCommerce 11.2.1 and MariaDB 10.11.14. GitHub Actions passed the PHP 8.1–8.4 matrix and WordPress Plugin Check for published code commit e38b151d6ac7ea24c9596761825da8f24ce2af75; see docs/evidence/github-actions-1.1.1.md. Minimum supported versions are requirements, not a claim that every combination was tested. Test evidence is in `docs/evidence/`.
 
 HTTP tests exercised WordPress routing, HTTP status, redirects, SOAP XML, persisted paid state and duplicate callbacks. They used local transport and a test router indicating HTTPS, rather than a public TLS connection. Database lock contention was verified with two real database connections. Full simultaneous provider return/IPN delivery was not tested.
 
@@ -74,7 +74,7 @@ Privacy/merchant obligations are disclosed rather than certified. Read the actua
 2. Real classic and block checkout browser flow, return/IPN overlap, public HTTPS, hosting/cache/firewall and theme compatibility.
 3. Approved live merchant endpoint and credentials; one small real transaction reconciled in JazzCash.
 4. WordPress.org account/slug and reviewer approval. Plugin Check is not directory approval.
-5. Confirm GitHub Actions succeeds for the published commit and configure ongoing repository maintenance.
+5. Configure ongoing repository maintenance; the initial published code passed all five GitHub CI jobs.
 
 ## Primary references
 
