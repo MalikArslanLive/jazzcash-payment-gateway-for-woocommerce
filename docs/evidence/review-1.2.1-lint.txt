@@ -1,0 +1,11 @@
+No syntax errors detected in rebrand-work/cardraabta-payment-gateway-for-jazzcash-and-woocommerce/cardraabta-payment-gateway-for-jazzcash-and-woocommerce.php
+No syntax errors detected in rebrand-work/cardraabta-payment-gateway-for-jazzcash-and-woocommerce/uninstall.php
+No syntax errors detected in rebrand-work/cardraabta-payment-gateway-for-jazzcash-and-woocommerce/includes/class-jccg-blocks.php
+No syntax errors detected in rebrand-work/cardraabta-payment-gateway-for-jazzcash-and-woocommerce/includes/class-jccg-gateway.php
+No syntax errors detected in rebrand-work/cardraabta-payment-gateway-for-jazzcash-and-woocommerce/includes/class-jccg-protocol.php
+No syntax errors detected in rebrand-work/cardraabta-payment-gateway-for-jazzcash-and-woocommerce/tests/wallet.php
+No syntax errors detected in rebrand-work/cardraabta-payment-gateway-for-jazzcash-and-woocommerce/tests/bootstrap.php
+No syntax errors detected in rebrand-work/cardraabta-payment-gateway-for-jazzcash-and-woocommerce/tests/run.php
+No syntax errors detected in rebrand-work/cardraabta-payment-gateway-for-jazzcash-and-woocommerce/tests/integration.php
+No syntax errors detected in rebrand-work/cardraabta-payment-gateway-for-jazzcash-and-woocommerce/tests/http-fixture.php
+No syntax errors detected in rebrand-work/cardraabta-payment-gateway-for-jazzcash-and-woocommerce/tests/security.php

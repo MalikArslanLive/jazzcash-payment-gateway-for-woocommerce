@@ -1,32 +1,26 @@
-# WordPress.org submission preparation
+# WordPress.org review update — 1.2.1
 
-Plugin: CardRaabta – JazzCash Payment Gateway for WooCommerce
-Version: 1.2.0
-Expected slug/text domain: cardraabta-jazzcash-payment-gateway-for-woocommerce
-Account supplied by user: malikarslan
+Display name: CardRaabta Payment Gateway for JazzCash and WooCommerce
+Requested slug/text domain: cardraabta-payment-gateway-for-jazzcash-and-woocommerce
+Current assigned submission slug: cardraabta-jazzcash-payment-gateway-for-woocommerce
+Account/contributor: malikarslan
 Author: Malik Arslan
 Author URI: https://malikarslan.com
 
-## Overview for reviewers
+## Review status and required owner actions
 
-An independent WooCommerce integration for JazzCash hosted Mobile Wallet and debit/credit card payments in PKR. It includes separate Sandbox/Live merchant settings, signed return and SOAP IPN validation, a configurable 72-hour default expiry, encrypted settings, duplicate-payment protection, Checkout Blocks and HPOS support. Customers enter card or wallet data on JazzCash and approve wallet payment on their phone. The readme documents the service, data flow, terms, privacy notice, browser-visible hosted-form payment password and unsupported features.
+Version 1.2.0 was submitted on 14 October 2026 and passed the submission scan. A 16 October review pended it for naming and external-service disclosure. This 1.2.1 package addresses both findings. It is not approved. Upload this update to the existing submission; do not create another submission. Reply to the review email thread requesting the exact new slug above. The plugin team must allocate it; updating code alone does not change the reserved slug. A text-domain warning against the old assigned slug may appear until allocation.
 
-## Public requirements reviewed 14 October 2026
+## Naming
 
-- https://wordpress.org/plugins/developers/add/
-- https://developer.wordpress.org/plugins/wordpress-org/plugin-developer-faq/
-- https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/
+The distinctive CardRaabta project identifier remains first. Payment Gateway explains the purpose. Both third-party brands follow 'for', consistent with the reviewer's suggested display-name structure. The main plugin header, readme heading, translations, build, folder and text domain use the new identity. Public name searches returned no exact independently owned CardRaabta match; this is not legal trademark clearance or an availability guarantee. No third-party logos, badges or copied banners are bundled. Author/contributor identities remain Malik Arslan / malikarslan, not a provider identity. GitHub remains a public development repository under MalikArslanLive, with an explicit independent-integration disclaimer.
 
-Runtime ZIP: installable WordPress structure, below 10 MB, GPL-compatible readable source and no development tools or nested archives. Display name starts with a generic term and matches the expected slug. Readme includes service disclosure, installation, limitations and the contributor username supplied by the user. Terms or ownership declarations in the final upload form must be reviewed with the account owner before acceptance.
+## External services
 
-## Status
+A dedicated top-level External services readme section describes JazzCash, the merchant opt-in, what data is transmitted, when/why, Sandbox and Live hosts, hosted credential visibility, callbacks and signed SOAP acknowledgement, storage/logs, official service/terms/merchant terms/privacy links and absence of other services. README repeats the disclosure. The official terms page and linked merchant terms PDF and September 2026 privacy PDF were opened and their contents checked on 16 October. The merchant PDF includes Online Payment Gateway Service Commercial Terms. The privacy notice covers JazzCash/MMBL branchless banking and other services.
 
-Not submitted. Signed in successfully as Malik Arslan on 14 October 2026. The full account-specific form was reviewed. It requires a distinctive name, owner permission, Plugin Check confirmation, no artificial functionality restrictions and ongoing guideline compliance. These account-owner declarations require final confirmation before submission. Do not claim real JazzCash merchant testing or directory approval. Confirm public TLS, real sandbox authorization and provider-sent IPN acceptance before production use.
+The URLs cited by the reviewer in registerNamespace, SOAP envelopes and DoUpdatePaymentStatusResponse are XML namespace identifiers. They are not fetched. Do not change their http spelling: that would change the protocol vocabulary. XML parsing uses LIBXML_NONET and rejects DTD/entities. The bundled WSDL is local. This context should be stated briefly in the reply.
 
-## Signed-in form review
+## Payment compatibility
 
-The authenticated form explicitly discourages generic names and requires a unique project identifier. CardRaabta was searched exactly on the internet and in WordPress-related results on 14 October 2026; no exact matches were returned. This is not trademark clearance. Proposed final title: CardRaabta – JazzCash Payment Gateway for WooCommerce. Proposed slug: cardraabta-jazzcash-payment-gateway-for-woocommerce.
-
-The plugin has no trialware, paid code unlock, arbitrary code editor/execution or external executable download. Its JazzCash-specific signed SOAP adapter and defensive payment reconciliation are documented. Plugin Check confirmation will use the final release build's check results. The owner must approve the declarations shown in the actual form; they have not been accepted automatically.
-
-Version 1.2.0 adds the requested hosted Mobile Wallet method using the documented v1.1 MWALLET profile. Existing signing, amount/order/mode checks, expiry, locking and reconciliation rules apply to both instruments. Each saved attempt is bound to its original card/wallet instrument. No real merchant transaction is claimed. Current plugin title is CardRaabta – JazzCash Payment Gateway for WooCommerce; the matching slug is cardraabta-jazzcash-payment-gateway-for-woocommerce.
+Card/wallet gateway IDs, shared encrypted credential option, separate wallet controls, transaction metadata, signing, trusted-host checks and jccg_return/jccg_ipn routes are retained. Existing 1.2.0 activation is rejected until that build is deactivated; do not uninstall it, since deletion removes credentials. Pending orders and existing settings remain usable after the rename. The owner reported merchant testing successful on 14 October; no additional real merchant transaction is performed by this revision's automated tests.

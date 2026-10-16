@@ -1,0 +1,51 @@
+PASS public WSDL returns XML
+PASS GET payment callback rejected
+PASS sandbox card duplicate form key rejected
+PASS sandbox card signed wrong-instrument return rejected
+PASS sandbox card forged return rejected
+PASS sandbox card valid return acknowledged while method disabled
+PASS sandbox card duplicate return acknowledged
+PASS sandbox card return paid status persisted
+PASS sandbox card signed wrong-instrument ipn rejected
+PASS sandbox card forged ipn rejected
+PASS sandbox card valid ipn acknowledged while method disabled
+PASS sandbox card SOAP acknowledgement fixed width
+PASS sandbox card duplicate ipn acknowledged
+PASS sandbox card ipn paid status persisted
+PASS sandbox wallet duplicate form key rejected
+PASS sandbox wallet signed wrong-instrument return rejected
+PASS sandbox wallet forged return rejected
+PASS sandbox wallet valid return acknowledged while method disabled
+PASS sandbox wallet duplicate return acknowledged
+PASS sandbox wallet return paid status persisted
+PASS sandbox wallet signed wrong-instrument ipn rejected
+PASS sandbox wallet forged ipn rejected
+PASS sandbox wallet valid ipn acknowledged while method disabled
+PASS sandbox wallet SOAP acknowledgement fixed width
+PASS sandbox wallet duplicate ipn acknowledged
+PASS sandbox wallet ipn paid status persisted
+PASS live card duplicate form key rejected
+PASS live card signed wrong-instrument return rejected
+PASS live card forged return rejected
+PASS live card valid return acknowledged while method disabled
+PASS live card duplicate return acknowledged
+PASS live card return paid status persisted
+PASS live card signed wrong-instrument ipn rejected
+PASS live card forged ipn rejected
+PASS live card valid ipn acknowledged while method disabled
+PASS live card SOAP acknowledgement fixed width
+PASS live card duplicate ipn acknowledged
+PASS live card ipn paid status persisted
+PASS live wallet duplicate form key rejected
+PASS live wallet signed wrong-instrument return rejected
+PASS live wallet forged return rejected
+PASS live wallet valid return acknowledged while method disabled
+PASS live wallet duplicate return acknowledged
+PASS live wallet return paid status persisted
+PASS live wallet signed wrong-instrument ipn rejected
+PASS live wallet forged ipn rejected
+PASS live wallet valid ipn acknowledged while method disabled
+PASS live wallet SOAP acknowledgement fixed width
+PASS live wallet duplicate ipn acknowledged
+PASS live wallet ipn paid status persisted
+50 HTTP endpoint checks passed with synthetic provider messages.

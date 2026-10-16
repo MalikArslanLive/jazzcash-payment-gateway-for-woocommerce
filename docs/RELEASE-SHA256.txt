@@ -1,1 +1,1 @@
-abae43420688f390268dfc4adb7a92d8c371c23460338a8efb9da36341ddd1b9  cardraabta-jazzcash-payment-gateway-for-woocommerce-1.2.0.zip
+fae0d8155d67e9711377cf355e3c22b6bf990bd6cf4a78aada1ef1ba574de867  cardraabta-payment-gateway-for-jazzcash-and-woocommerce-1.2.1.zip

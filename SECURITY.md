@@ -18,6 +18,6 @@ Before public release: enable private vulnerability reporting and secret scannin
 - Hidden hosted-form pp_Password is visible to the payer under the documented JazzCash redirect protocol. The salt is server-only. Confirm the merchant's profile authorizes this design.
 - Logs contain fixed event codes and order IDs, not payloads. Configure WooCommerce log retention and exclude callbacks from any external request-body recording.
 
-## Mobile Wallet boundaries (1.2.0)
+## Mobile Wallet boundaries (1.2.1)
 
 The new jccg_wallet method uses hosted redirection and the existing signed return/SOAP routes. Wallet numbers, CNIC digits and MPINs are not collected or persisted. The merchant payment password is still a browser-visible hidden field under the provider protocol; do not confuse it with a payer MPIN. Wallet and card callbacks must match the saved instrument, preventing cross-instrument success reuse. Legacy attempts without an instrument field are treated as card attempts only. Wallet enable/title/description use a distinct settings option; credentials, mode, expiry and approved URLs reuse the encrypted card configuration. Uninstall removes both settings options. No security check is bypassed for wallet responses.

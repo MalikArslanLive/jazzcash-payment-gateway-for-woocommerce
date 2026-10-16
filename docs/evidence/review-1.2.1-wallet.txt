@@ -1,0 +1,79 @@
+PASS: official JazzCash HMAC vector
+PASS: valid signature
+PASS: tampered amount rejected
+PASS: paisa conversion
+PASS: one paisa retained
+PASS: leading zeros normalized
+PASS: excess precision rejected
+PASS: negative rejected
+PASS: zero rejected
+PASS: scientific notation rejected
+PASS: 72 hours across year boundary in Karachi
+PASS: 72 elapsed hours exactly
+PASS: zero expiry rejected
+PASS: secret stored encrypted
+PASS: blank preserves secret
+PASS: explicit secret removal
+PASS: valid callback completes order
+PASS: replayed success completes once
+PASS: later failure cannot downgrade paid order
+PASS: forged callback rejected
+PASS: forgery never fulfils order
+PASS: signed wrong amount rejected
+PASS: signed wrong currency rejected
+PASS: signed wrong merchant rejected
+PASS: wrong transaction date rejected
+PASS: unknown attempt rejected
+PASS: edited order amount rejected
+PASS: cancelled payment queued for manual reconciliation
+PASS: review note not duplicated
+PASS: refund cannot be resurrected
+PASS: ambiguous status held for review
+PASS: later verified success completes held order
+PASS: SOAP parser preserves signed field values
+PASS: documented SOAP without amount verifies stored attempt
+PASS: fixed width SOAP acknowledgement
+PASS: external entities rejected
+PASS: duplicate SOAP fields rejected
+PASS: wrong SOAP password rejected
+PASS: late sandbox callback uses original mode credentials
+
+39 checks passed.
+PASS: HTTP form parsing preserves signature fields
+PASS: duplicate HTTP form fields rejected
+PASS: PHP array-style form fields rejected
+PASS: oversized callback rejected
+PASS: malformed response JSON rejected
+PASS: ambiguous wrapped plus flat response rejected
+PASS: missing hash rejected
+PASS: empty hash rejected
+PASS: zero-valued signing field not dropped
+Total: 48 regression checks passed.
+PASS: wallet and card have distinct checkout IDs
+PASS: wallet is opt-in on existing stores
+PASS: wallet enable/title settings cannot overwrite card configuration
+PASS: wallet uses the existing encrypted merchant configuration
+PASS: shared callback completes verified wallet order
+PASS: wallet success replay fulfils once
+PASS: wallet failure cannot downgrade paid order
+PASS: wallet amount tampering fails HMAC
+PASS: signed wallet wrong amount rejected
+PASS: signed wallet wrong currency rejected
+PASS: signed wallet wrong merchant rejected
+PASS: signed wallet wrong timestamp rejected
+PASS: card response cannot pay wallet order
+PASS: legacy card response cannot pay wallet order
+PASS: wallet attack probes do not fulfil
+PASS: wallet response cannot pay a legacy card order
+PASS: legacy card attempt cannot be relabeled as wallet
+PASS: edited payment method requires reconciliation
+PASS: edited wallet order total rejected
+PASS: late wallet success on cancelled order held for review once
+PASS: wallet cannot resurrect refunded order
+PASS: wallet non-success needs reconciliation
+PASS: later wallet verified success completes held order
+PASS: wallet SOAP binds stored request amount and instrument
+PASS: card SOAP cannot pay wallet order
+PASS: wallet SOAP wrong password rejected
+PASS: late wallet response uses credentials from saved original mode
+Wallet checks: 27 passed.

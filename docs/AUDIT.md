@@ -1,4 +1,12 @@
-# Release and security review — 1.2.0
+# Review correction — 1.2.1 (16 October 2026)
+
+This revision addresses the WordPress.org naming and external-service findings. It uses CardRaabta Payment Gateway for JazzCash and WooCommerce with the requested slug cardraabta-payment-gateway-for-jazzcash-and-woocommerce. See WORDPRESS-SUBMISSION.md for owner actions and namespace clarification. External services are explicitly documented in runtime readme.txt and README.md, including verified official policy links. No required protocol namespace was changed. The current merchant-test status is the owner's report of successful testing, not an automated-provider certification.
+
+Runtime changes are naming/text domain, local XML explanatory comments and previous-1.2.0 activation collision protection. Payment protocols, IDs/options, callbacks and security checks are retained. Final checks passed: 48 baseline protocol checks, 20 adversarial checks, 27 wallet checks, 10 Blocks assertions, six bootstrap/migration assertions, 160 WordPress/WooCommerce integration checks and 50 local HTTP callback checks. Official Plugin Check 2.1.0 reported no errors on the extracted runtime ZIP. PHP/JS syntax and the narrow dangerous-sink scanner passed. Final test evidence is recorded in docs/evidence/review-1.2.1-*.txt. Prior version reports below retain their original scope and limitations.
+
+---
+
+# Historical release and security review — 1.2.0
 
 Reviewed 14 October 2026. This release adds a separate, disabled-by-default JazzCash Mobile Wallet gateway to the existing card gateway. Both instruments use hosted checkout and the same encrypted merchant configuration, with separate enable/title/description settings. Sandbox and live configuration paths are supported; actual merchant acceptance testing remains pending.
 
@@ -93,7 +101,7 @@ The following entries record the package's disposition against each numbered gui
 | 14 | Release discipline documented; future commit behavior is a maintainer obligation. |
 | 15 | Version/header/stable tag aligned at 1.1.1. |
 | 16 | Runtime implementation present; provider acceptance remains an explicit release gate. |
-| 17 | Generic-leading slug cardraabta-jazzcash-payment-gateway-for-woocommerce; user-selected display title and non-endorsement statement. Title/slug approval remains subject to reviewer discretion. |
+| 17 | Generic-leading slug cardraabta-payment-gateway-for-jazzcash-and-woocommerce; user-selected display title and non-endorsement statement. Title/slug approval remains subject to reviewer discretion. |
 | 18 | Directory review discretion acknowledged. |
 
 Privacy/merchant obligations are disclosed rather than certified. Read the actual merchant agreement for the account; obtain legal/PCI advice if required for the store's operation. No real merchant contract or WordPress.org account ownership was supplied for verification.
@@ -128,6 +136,6 @@ This revision changes metadata and documentation, not payment processing. The ru
 
 ## Signed-in submission form — 1.1.3
 
-The authenticated upload form was reviewed on 14 October 2026. It explicitly requires a distinctive identifier and warns that generic names are unlikely to be accepted. The proposed name is now CardRaabta – JazzCash Payment Gateway for WooCommerce, with matching folder/text domain cardraabta-jazzcash-payment-gateway-for-woocommerce. Exact-name internet searches returned no matches; no legal trademark clearance is implied. The account email matches the address supplied by the user. Ownership, no-trialware and ongoing-guideline declarations await the owner's final confirmation. Earlier authentication-status notes describe preparation before this successful login.
+The authenticated upload form was reviewed on 14 October 2026. It explicitly requires a distinctive identifier and warns that generic names are unlikely to be accepted. The proposed name is now CardRaabta Payment Gateway for JazzCash and WooCommerce, with matching folder/text domain cardraabta-payment-gateway-for-jazzcash-and-woocommerce. Exact-name internet searches returned no matches; no legal trademark clearance is implied. The account email matches the address supplied by the user. Ownership, no-trialware and ongoing-guideline declarations await the owner's final confirmation. Earlier authentication-status notes describe preparation before this successful login.
 
 Payment behavior is unchanged. Existing gateway ID, callback routes and encrypted option names are retained. The old plugin must be deactivated before this newly named package is activated.

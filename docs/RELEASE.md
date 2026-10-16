@@ -1,6 +1,6 @@
 # Release and merchant acceptance
 
-Release 1.2.0 is prepared for merchant acceptance and WordPress.org submission review. It is not provider-certified. Do not accept live payments until the checklist below is complete.
+Release 1.2.1 is prepared for merchant acceptance and WordPress.org submission review. It is not provider-certified. Do not accept live payments until the checklist below is complete.
 
 ## Merchant setup
 
@@ -12,7 +12,7 @@ Record evidence from real JazzCash for classic and block checkouts: success, dec
 
 Source repository: `MalikArslanLive/jazzcash-payment-gateway-for-woocommerce`.
 
-The source kit includes all readable code, GPL license, tests, build script, contribution/security guidance and pinned GitHub Actions. The repository contains the source at its root. CI needs no payment secrets. Enable private vulnerability reporting, branch protection and secret scanning where available. Require checks before merging; tag the reviewed commit `v1.2.0` and attach the installable ZIP plus checksums to a release after acceptance. GitHub Actions runs are separate from the recorded local checks; inspect the repository Actions page for the status of each commit.
+The source kit includes all readable code, GPL license, tests, build script, contribution/security guidance and pinned GitHub Actions. The repository contains the source at its root. CI needs no payment secrets. Enable private vulnerability reporting, branch protection and secret scanning where available. Require checks before merging; tag the reviewed commit `v1.2.1` and attach the installable ZIP plus checksums to a release after acceptance. GitHub Actions runs are separate from the recorded local checks; inspect the repository Actions page for the status of each commit.
 
 ## WordPress.org
 
@@ -38,4 +38,4 @@ The HTTP test evidence covers real local HTTP requests to WordPress with HTTPS i
 
 ## Mobile Wallet acceptance
 
-Version 1.2.0 adds a distinct opt-in jccg_wallet method. Enable it under WooCommerce payment settings; shared merchant credentials, mode, expiry and mode-specific wallet URLs remain in the card gateway configuration. Card and wallet enable/title controls are isolated to prevent WooCommerce REST/AJAX updates changing the other method. Confirm JazzCash approves the documented hosted v1.1 MWALLET/TBANK/RETL profile and issued URL for this merchant. Verify a real wallet success, rejection, phone approval, abandonment, SOAP notification, duplicate and delayed callback before Live use. Merchant MPIN/CNIC/mobile data must never be collected in this plugin or its logs.
+Version 1.2.0 introduced a distinct opt-in jccg_wallet method. Enable it under WooCommerce payment settings; shared merchant credentials, mode, expiry and mode-specific wallet URLs remain in the card gateway configuration. Card and wallet enable/title controls are isolated to prevent WooCommerce REST/AJAX updates changing the other method. Confirm JazzCash approves the documented hosted v1.1 MWALLET/TBANK/RETL profile and issued URL for this merchant. Verify a real wallet success, rejection, phone approval, abandonment, SOAP notification, duplicate and delayed callback before Live use. Merchant MPIN/CNIC/mobile data must never be collected in this plugin or its logs.

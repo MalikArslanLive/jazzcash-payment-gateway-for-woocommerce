@@ -4,7 +4,7 @@ from pathlib import Path
 import re
 
 root = Path(__file__).resolve().parents[1]
-files = [root / 'cardraabta-jazzcash-payment-gateway-for-woocommerce.php', root / 'uninstall.php']
+files = [root / 'cardraabta-payment-gateway-for-jazzcash-and-woocommerce.php', root / 'uninstall.php']
 files += sorted((root / 'includes').glob('*.php'))
 files += sorted((root / 'assets').glob('*.js'))
 patterns = {

@@ -81,6 +81,7 @@ final class AGJC_Protocol {
 		if ( ! $ok ) {
 			throw new RuntimeException( 'Invalid XML.' ); }
 		$xp = new DOMXPath( $doc );
+		// XML vocabulary identifiers only; these URLs are never fetched. LIBXML_NONET blocks network access.
 		$xp->registerNamespace( 's', 'http://schemas.xmlsoap.org/soap/envelope/' );
 		$nodes = $xp->query( '/s:Envelope/s:Body/*' );
 		if ( $nodes->length !== 1 || $nodes->item( 0 )->localName !== 'DoUpdatePaymentStatus'
@@ -100,6 +101,7 @@ final class AGJC_Protocol {
 		return $data;
 	}
 
+	/** Build local response XML; xmlns values identify vocabularies, not remote resources. */
 	public static function soap_ack( string $salt ): string {
 		$message = str_repeat( ' ', 200 );
 		$hash    = self::hash(

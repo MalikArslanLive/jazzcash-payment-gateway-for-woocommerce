@@ -1,11 +1,11 @@
-=== CardRaabta – JazzCash Payment Gateway for WooCommerce ===
+=== CardRaabta Payment Gateway for JazzCash and WooCommerce ===
 Contributors: malikarslan
 Tags: woocommerce, payment gateway, credit card, jazzcash, pakistan
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: woocommerce
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,18 +29,33 @@ You need an approved JazzCash payment-gateway merchant account, dedicated paymen
 
 Requires WooCommerce 8.3+, PKR currency, HTTPS, PHP OpenSSL/iconv/DOM and MySQL/MariaDB connection-scoped named locks. Gateway responses must be signed. Use on a staging store and complete your merchant acceptance testing before taking real payments.
 
-= External service and privacy =
+== External services ==
 
-The plugin uses JazzCash to process the payment selected by the customer. When the customer presses "Continue to JazzCash", their browser submits order/payment references, amount, PKR currency, creation/expiry timestamps, return URL, merchant ID, payment password and request signature to the configured JazzCash endpoint. The Integrity Salt is never submitted. This version does not submit billing names, email addresses, telephone numbers or addresses. JazzCash receives the customer's browser/IP information during that visit and collects card or wallet details on its own page; wallet approval happens on the payer’s phone.
+= JazzCash payment processing =
 
-Service domains are sandbox.jazzcash.com.pk and payments.jazzcash.com.pk. The plugin receives authenticated status callbacks to update WooCommerce orders. It stores payment-attempt metadata, status and transaction references with the order. Debug logs contain fixed event codes and order IDs only, and use WooCommerce's log-retention settings. It has no telemetry, advertising, tracking pixels, third-party JavaScript or external updater.
+This plugin relies on JazzCash, an external payment service, to process debit/credit card and Mobile Wallet payments. A store owner must obtain an approved merchant account, configure dedicated credentials and enable the chosen payment method. Both Sandbox and Live integrations are included; JazzCash service charges and merchant terms apply separately.
 
-JazzCash service: https://www.jazzcash.com.pk/accept-payments/payment-gateway
-JazzCash terms: https://www.jazzcash.com.pk/tc
-JazzCash privacy notice: https://www.jazzcash.com.pk/assets/documents/JazzCash-Privacy-Notice-sep-2026.pdf
-Merchant service agreement: https://www.jazzcash.com.pk/assets/uploads/2026/04/SERVICE-ORDER-FORM-COMMERCIAL-TERMS-FOR-ONLINE-PAYMENT-COLLECTION-SERVICES-MW-and-CARDS.pdf
+When and why data is sent: only when a customer chooses a JazzCash method, opens the order payment page and presses "Continue to JazzCash", their browser POSTs a signed payment request to the merchant-configured JazzCash hosted payment URL. The purpose is to authenticate the merchant, identify the order and process the selected payment. Activation, ordinary browsing and saving settings do not send payment data to JazzCash.
 
-Your signed merchant agreement may contain additional obligations. The plugin does not certify PCI, privacy-law or other legal compliance. Update your store privacy policy and retention practices accordingly; suggested text is added to WordPress's privacy-policy guide.
+Where data is sent: Sandbox requests go to https://sandbox.jazzcash.com.pk/ and Live requests go to https://payments.jazzcash.com.pk/. The exact page-redirection path is supplied by JazzCash for the merchant. Other hosts, insecure HTTP endpoints and unexpected ports are rejected.
+
+Data sent: merchant ID and dedicated payment password; transaction type/version/language; unique transaction reference; order ID as bill reference, description and merchant-defined field; amount in paisa and PKR currency; creation and expiry timestamps; return URL; and SecureHash signature. Wallet requests also include the bank/product identifiers TBANK/RETL; card requests include the registration flag. The Integrity Salt is never sent. The plugin does not send billing name, email, telephone or postal address, and does not collect card numbers, wallet numbers, CNIC, OTP or MPIN. JazzCash receives browser/IP information and collects the payment details directly on its own hosted page.
+
+Return and IPN: JazzCash sends payment references, response codes, timestamps and authentication fields to this store's public Return URL or SOAP IPN URL. Signed callbacks are verified before updating the related WooCommerce order. The store replies to a valid SOAP notification with a signed acknowledgement containing a response code and padded response message. Invalid notifications receive a generic error. Payment-attempt metadata, status and transaction references are retained with the WooCommerce order. Optional logs contain fixed event codes and order IDs, using WooCommerce log retention. Full payloads and credentials are not logged.
+
+Service and policies (official JazzCash links):
+* Payment gateway service: https://www.jazzcash.com.pk/business/accept-payments/payment-gateway
+* Terms and conditions: https://www.jazzcash.com.pk/tc/
+* Online payment gateway merchant terms (PDF; includes Online Payment Gateway Service Commercial Terms): https://www.jazzcash.com.pk/assets/uploads/2026/04/Overall-Banking-Service-Agreement-BNPL-QR-PGW-MP-standard-format-with-all-service-order-forms.pdf
+* Customer privacy notice (PDF): https://www.jazzcash.com.pk/assets/documents/JazzCash-Privacy-Notice-sep-2026.pdf
+
+Your signed merchant agreement may contain additional obligations. Update your store privacy policy and retention practices accordingly. Suggested customer-facing text is added to WordPress's privacy-policy guide. The plugin does not certify PCI, privacy-law or other legal compliance.
+
+= No other external services =
+
+This plugin adds no telemetry, advertising, tracking pixels, externally hosted JavaScript or custom updater. WordPress and WooCommerce are local dependencies. GitHub and documentation links are references for users/developers; the plugin does not fetch code or data from them.
+
+The strings http://schemas.xmlsoap.org/soap/envelope/, http://schemas.xmlsoap.org/wsdl/, http://schemas.xmlsoap.org/wsdl/soap/, http://www.w3.org/2001/XMLSchema and http://tempuri.org/ in PHP/WSDL are XML namespace or SOAP-action identifiers, not external service requests. They must retain their protocol-defined spelling, including http. XML parsing disables network access with LIBXML_NONET and rejects DTD/entity declarations. The WSDL is a bundled local template, with this store's HTTPS IPN address substituted when served.
 
 = Hosted-form credential behavior =
 
@@ -48,7 +63,7 @@ JazzCash's documented page-redirection protocol includes pp_Password in the brow
 
 == Installation ==
 
-1. Back up your site and deactivate the earlier 1.0.0–1.1.2 build if installed. Do not run both builds together.
+1. Back up your site and deactivate the earlier 1.0.0–1.2.0 build if installed. Do not run both builds together.
 2. Upload and activate this plugin with WooCommerce active.
 3. Open WooCommerce > Settings > Payments > JazzCash Credit / Debit Card.
 4. Choose Sandbox, enter sandbox credentials and the merchant-issued HTTPS page-redirection URL, and retain the default 72-hour expiry if suitable.
@@ -88,6 +103,11 @@ Not in this version. Process refunds through JazzCash and record them in WooComm
 Plugin deletion removes credentials/settings for the current site but retains order accounting records. On multisite, clear settings on each site before network deletion. Deactivation alone retains settings. Constants in wp-config.php must be removed separately.
 
 == Changelog ==
+
+= 1.2.1 =
+* Use a distinctive third-party integration name, matching folder and text domain.
+* Expand external-service disclosure and verified official terms/privacy links.
+* Clarify local SOAP/XML namespace identifiers and retain the existing payment/security controls.
 
 = 1.2.0 =
 * Add hosted JazzCash Mobile Wallet as a separate opt-in checkout method.

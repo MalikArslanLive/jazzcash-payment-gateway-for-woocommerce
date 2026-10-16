@@ -1,12 +1,12 @@
-# CardRaabta – JazzCash Payment Gateway for WooCommerce — 1.2.0
+# CardRaabta Payment Gateway for JazzCash and WooCommerce — 1.2.1
 
 Accept JazzCash Mobile Wallet and debit/credit card payments directly through JazzCash in your WooCommerce store. Includes separate Sandbox and Live settings, 72-hour default expiry, signed payment callbacks, Checkout Blocks and HPOS support.
 
-Developed by [Malik Arslan](https://malikarslan.com). Not an official or endorsed JazzCash plugin. Before upgrading the earlier 1.0.0–1.1.3 build, deactivate that plugin; the gateway ID and encrypted settings remain compatible. Do not run both builds together.
+Developed by [Malik Arslan](https://malikarslan.com). This is an independent third-party integration, not affiliated with or endorsed by JazzCash or WooCommerce. Before upgrading the earlier 1.0.0–1.2.0 build, deactivate that plugin; the gateway ID and encrypted settings remain compatible. Do not run both builds together.
 
 ## Download
 
-[Download the installable plugin ZIP](downloads/cardraabta-jazzcash-payment-gateway-for-woocommerce-1.2.0.zip?raw=true) · [Security review](docs/AUDIT.md) · [Merchant acceptance checklist](docs/RELEASE.md)
+[Download the installable plugin ZIP](downloads/cardraabta-payment-gateway-for-jazzcash-and-woocommerce-1.2.1.zip?raw=true) · [Security review](docs/AUDIT.md) · [Merchant acceptance checklist](docs/RELEASE.md)
 
 Use the installable ZIP for WordPress. GitHub’s source-code ZIP includes development files. Real JazzCash merchant acceptance remains required before live use.
 
@@ -14,7 +14,7 @@ Source and issue tracking: https://github.com/MalikArslanLive/jazzcash-payment-g
 
 ## Install
 
-1. In WordPress, open Plugins → Add New → Upload Plugin. Upload this ZIP and activate.
+1. Back up the store and deactivate any earlier CardRaabta build (do not delete it). In WordPress, open Plugins → Add New → Upload Plugin. Upload this ZIP and activate.
 2. Open WooCommerce → Settings → Payments → JazzCash Credit / Debit Card.
 3. Select Sandbox. Enter the sandbox Merchant ID, Password and Integrity Salt. Paste the **HTTPS page-redirection payment URL supplied in your JazzCash merchant onboarding profile**. Do not paste a JSON API URL. Live credentials and URL are stored separately.
 4. Copy the exact Return URL from settings into your JazzCash merchant profile. Enable response hashing with JazzCash.
@@ -32,7 +32,7 @@ Requirements: WordPress 6.5+, WooCommerce 8.3+, PHP 8.1+, OpenSSL, iconv, DOM/XM
 - HMAC-SHA256 request/response checking, constant-time signature comparison, unique transaction references and exact decimal-to-paisa conversion.
 - Return URL and SOAP IPN validate a persisted attempt before updating its order. Return responses require matching merchant, amount, currency, type and creation timestamp. The documented SOAP input has no amount/currency; its signature, password and transaction timestamp bind it to the saved original request, whose amount must still match the order.
 - Duplicate callback protection, database serialization of updates, and paid/refunded/cancelled order protection. Paid orders cannot be downgraded by later error notifications.
-- WooCommerce order CRUD for HPOS. Minimal logs under WooCommerce → Status → Logs → `cardraabta-jazzcash-payment-gateway-for-woocommerce`.
+- WooCommerce order CRUD for HPOS. Minimal logs under WooCommerce → Status → Logs → `cardraabta-payment-gateway-for-jazzcash-and-woocommerce`.
 
 ## JazzCash Mobile Wallet
 
@@ -45,6 +45,34 @@ The payer is redirected to JazzCash to enter wallet details and approve payment 
 A persisted attempt is bound to its original card/wallet instrument as well as merchant, amount, timestamp and mode. Changing an instrument after an attempt is created requires manual reconciliation; the plugin will not generate another charge attempt. Authenticated callbacks remain accepted for existing attempts even if that checkout method is later disabled.
 
 Before Live use, test a real wallet success, rejection, abandonment, replay, delayed success and provider-sent SOAP notification with your approved merchant profile. The documented SOAP adapter still requires merchant provisioning and acknowledgement acceptance.
+
+## External services
+
+### JazzCash payment processing
+
+This plugin relies on JazzCash, an external payment service, to process debit/credit card and Mobile Wallet payments. A store owner must obtain an approved merchant account, configure dedicated credentials and enable the chosen payment method. Both Sandbox and Live integrations are included; JazzCash service charges and merchant terms apply separately.
+
+When and why data is sent: only when a customer chooses a JazzCash method, opens the order payment page and presses "Continue to JazzCash", their browser POSTs a signed payment request to the merchant-configured JazzCash hosted payment URL. The purpose is to authenticate the merchant, identify the order and process the selected payment. Activation, ordinary browsing and saving settings do not send payment data to JazzCash.
+
+Where data is sent: Sandbox requests go to https://sandbox.jazzcash.com.pk/ and Live requests go to https://payments.jazzcash.com.pk/. The exact page-redirection path is supplied by JazzCash for the merchant. Other hosts, insecure HTTP endpoints and unexpected ports are rejected.
+
+Data sent: merchant ID and dedicated payment password; transaction type/version/language; unique transaction reference; order ID as bill reference, description and merchant-defined field; amount in paisa and PKR currency; creation and expiry timestamps; return URL; and SecureHash signature. Wallet requests also include the bank/product identifiers TBANK/RETL; card requests include the registration flag. The Integrity Salt is never sent. The plugin does not send billing name, email, telephone or postal address, and does not collect card numbers, wallet numbers, CNIC, OTP or MPIN. JazzCash receives browser/IP information and collects the payment details directly on its own hosted page.
+
+Return and IPN: JazzCash sends payment references, response codes, timestamps and authentication fields to this store's public Return URL or SOAP IPN URL. Signed callbacks are verified before updating the related WooCommerce order. The store replies to a valid SOAP notification with a signed acknowledgement containing a response code and padded response message. Invalid notifications receive a generic error. Payment-attempt metadata, status and transaction references are retained with the WooCommerce order. Optional logs contain fixed event codes and order IDs, using WooCommerce log retention. Full payloads and credentials are not logged.
+
+Service and policies (official JazzCash links):
+* Payment gateway service: https://www.jazzcash.com.pk/business/accept-payments/payment-gateway
+* Terms and conditions: https://www.jazzcash.com.pk/tc/
+* Online payment gateway merchant terms (PDF; includes Online Payment Gateway Service Commercial Terms): https://www.jazzcash.com.pk/assets/uploads/2026/04/Overall-Banking-Service-Agreement-BNPL-QR-PGW-MP-standard-format-with-all-service-order-forms.pdf
+* Customer privacy notice (PDF): https://www.jazzcash.com.pk/assets/documents/JazzCash-Privacy-Notice-sep-2026.pdf
+
+Your signed merchant agreement may contain additional obligations. Update your store privacy policy and retention practices accordingly. Suggested customer-facing text is added to WordPress's privacy-policy guide. The plugin does not certify PCI, privacy-law or other legal compliance.
+
+### No other external services
+
+This plugin adds no telemetry, advertising, tracking pixels, externally hosted JavaScript or custom updater. WordPress and WooCommerce are local dependencies. GitHub and documentation links are references for users/developers; the plugin does not fetch code or data from them.
+
+The strings http://schemas.xmlsoap.org/soap/envelope/, http://schemas.xmlsoap.org/wsdl/, http://schemas.xmlsoap.org/wsdl/soap/, http://www.w3.org/2001/XMLSchema and http://tempuri.org/ in PHP/WSDL are XML namespace or SOAP-action identifiers, not external service requests. They must retain their protocol-defined spelling, including http. XML parsing disables network access with LIBXML_NONET and rejects DTD/entity declarations. The WSDL is a bundled local template, with this store's HTTPS IPN address substituted when served.
 
 ## Payment and stock behavior
 
